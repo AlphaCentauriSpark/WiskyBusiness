@@ -7,7 +7,7 @@ const Game = () => {
 
   const pets = useRouteLoaderData("root");
 
-  console.log('this is the child: ', pets)
+  console.log('data from data loader: ', pets)
 
   return (
     <div>
