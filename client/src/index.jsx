@@ -10,10 +10,11 @@ import {
 } from 'react-router-dom';
 import Game from './components/Game';
 import Card from './components/Card';
+import petsLoader from './loaders/petsLoader'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<App />}>
+    <Route path="/" loader={petsLoader} id="root" element={<App />}>
       <Route index path="home" element={<Game />}></Route>
       <Route path="catalog" element={<Card />}></Route>
     </Route>

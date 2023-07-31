@@ -1,6 +1,19 @@
-import React from 'react';
+import react from 'react';
+import { useEffect } from 'react'
+import { useLoaderData } from 'react-router-dom'
+import { useRouteLoaderData } from "react-router-dom";
+
 const Game = () => {
-  return <h1>TEST GAME HELP NEW PAGE????</h1>;
+
+  const pets = useRouteLoaderData("root");
+
+  console.log('this is the child: ', pets)
+
+  return (
+    <div>
+      test pls
+    </div>
+  )
 };
 
 export default Game;
