@@ -12,12 +12,13 @@ import {
 } from 'react-router-dom';
 import Game from './components/MemoryGame/Game';
 import Card from './components/Card';
+import Catalog from './components/Catalog';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route index path="home" element={<Game />}></Route>
-      <Route path="catalog" element={<Card />}></Route>
+      <Route path="catalog" element={<Catalog />}></Route>
     </Route>
   )
 );

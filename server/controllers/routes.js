@@ -39,8 +39,9 @@ module.exports.getAnimals = (req, res) => {
     },
   })
     .then((tokenObj) => {
+      console.log(tokenObj);
       let token = tokenObj.data.token_type + ' ' + tokenObj.data.access_token;
-      let category = `animals/?location=${req.query.zip}&limit=100`;
+      let category = `animals/?location=${req.query.zip}&limit=50`;
       axios({
         method: 'get',
         url: category,

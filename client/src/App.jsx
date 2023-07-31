@@ -1,9 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, createContext } from 'react';
 // import '../index.css';
 import axios from 'axios';
 import { Outlet, Link } from 'react-router-dom';
 import animalsLoader from './loaders/animalsLoader.jsx';
 import Stack from '@mui/material/Stack';
+import Catalog from './components/Catalog';
+
+export const AnimalContext = createContext();
 
 const App = () => {
   const [count, setCount] = useState(0);
@@ -27,7 +30,7 @@ const App = () => {
         })
         .then((response) => {
           console.log('AXIOS RESPONSE IN APP', response.data);
-          setAnimals(response.data.animals);
+          setAnimals(response.data);
         })
         .catch((error) => {
           console.log(error);
@@ -39,15 +42,18 @@ const App = () => {
     fetch();
   }, []);
 
-  return (
-    <Stack m={2}>
-      <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
-      <Link to="/home">HomePage</Link>
-      <Outlet />
-    </Stack>
-  );
+  if (animals !== undefined) {
+    return (
+      <AnimalContext.Provider value={animals}>
+        <Stack m={2}>
+          <h1 className="text-3xl font-bold underline">Hello world!</h1>
+          <Link to="/home">HomePage</Link>
+          <Link to="/catalog">Catalog</Link>
+          <Outlet />
+        </Stack>
+      </AnimalContext.Provider>
+    );
+  }
 };
 
 export default App;
