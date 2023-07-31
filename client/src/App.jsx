@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import './index.css';
+// import '../index.css';
 import axios from 'axios';
 import { Outlet, Link } from 'react-router-dom';
 import animalsLoader from './loaders/animalsLoader.jsx';
@@ -29,7 +29,10 @@ const App = () => {
   return (
     // <div className="m-5">
     <Stack m={2}>
-      <Link to="/home">Home Button</Link>
+      <h1 className="text-3xl font-bold underline">
+      Hello world!
+    </h1>
+      <Link to="/home">HomePage</Link>
       <Outlet />
     </Stack>
     // </div>

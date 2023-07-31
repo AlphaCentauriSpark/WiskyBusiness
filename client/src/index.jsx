@@ -1,14 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
-import './index.css';
+// import './index.css';
+import 'tailwindcss/tailwind.css';
+
 import {
   createBrowserRouter,
   createRoutesFromElements,
   Route,
   RouterProvider,
 } from 'react-router-dom';
-import Game from './components/Game';
+import Game from './components/MemoryGame/Game';
 import Card from './components/Card';
 
 const router = createBrowserRouter(
