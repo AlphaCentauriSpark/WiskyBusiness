@@ -83,7 +83,6 @@ module.exports.getTypes = (req, res) => {
         },
       })
         .then((response) => {
-          console.log(response.data.types.length);
           res.send(response.data.types);
         })
         .catch((err) => {

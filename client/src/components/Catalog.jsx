@@ -7,7 +7,7 @@ import { useContext } from 'react';
 const Catalog = () => {
   const animals = useContext(AnimalContext);
 
-  console.log(animals);
+  // console.log(animals);
   return (
     <Stack direction="row" spacing={2}>
       {animals.map((animal) => {
@@ -18,6 +18,7 @@ const Catalog = () => {
               name={animal.name}
               species={animal.species}
               gender={animal.gender}
+              animal={animal}
             />
           );
         }

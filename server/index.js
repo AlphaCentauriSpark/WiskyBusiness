@@ -9,7 +9,6 @@ const PORT = 3000;
 require('dotenv').config()
 
 app.use(express.static(path.join(__dirname)));
-console.log(path.join(__dirname));
 app.use(bodyParser.json());
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
