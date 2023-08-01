@@ -2,7 +2,7 @@ import { useState, useEffect, createContext } from 'react';
 // import '../index.css';
 import axios from 'axios';
 import { Outlet, Link } from 'react-router-dom';
-import animalsLoader from './loaders/animalsLoader.jsx';
+// import animalsLoader from './loaders/animalsLoader.jsx';
 import Stack from '@mui/material/Stack';
 import Catalog from './components/Catalog';
 
@@ -41,6 +41,7 @@ const App = () => {
   useEffect(() => {
     fetch();
   }, []);
+
 
   if (animals !== undefined) {
     return (

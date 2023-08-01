@@ -1,15 +1,15 @@
 import axios from 'axios';
 
-const animalsLoader = () => {
-  console.log('I AM BEING CALLED');
-  axios
+const petsLoader = () => {
+  return axios
     .get('http://localhost:3000/')
     .then((response) => {
+      console.log('axios call from loader: ', response.data)
       return response.data;
     })
     .catch((error) => {
-      console.log('ERROR I HATE YOU', error);
+      console.log(error);
     });
 };
 
-export default animalsLoader;
+export default petsLoader;
