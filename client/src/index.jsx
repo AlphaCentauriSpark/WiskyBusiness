@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
 // import './index.css';
 import 'tailwindcss/tailwind.css';
-
+import petsLoader from './loaders/petsLoader'
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -15,7 +15,7 @@ import Card from './components/Card';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<App />}>
+    <Route path="/" loader={petsLoader} id="root" element={<App />}>
       <Route index path="home" element={<Game />}></Route>
       <Route path="catalog" element={<Card />}></Route>
     </Route>

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 // import '../index.css';
 import axios from 'axios';
 import { Outlet, Link } from 'react-router-dom';
-import animalsLoader from './loaders/animalsLoader.jsx';
+// import animalsLoader from './loaders/animalsLoader.jsx';
 import Stack from '@mui/material/Stack';
 
 const App = () => {
@@ -29,9 +29,7 @@ const App = () => {
   return (
     // <div className="m-5">
     <Stack m={2}>
-      <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
+
       <Link to="/home">HomePage</Link>
       <Outlet />
     </Stack>
