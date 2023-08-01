@@ -15,7 +15,7 @@ const Catalog = () => {
   const [genderFilter, setGenderFilter] = useState('all');
   const animals = useContext(AnimalContext);
 
-  console.log(animals);
+  // console.log(animals);
   return (
     <>
       <Box>
