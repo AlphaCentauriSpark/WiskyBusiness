@@ -1,20 +1,29 @@
 import GameCard from "./GameCard.jsx";
 import { useState, useEffect } from "react";
 import { useRouteLoaderData } from "react-router-dom";
+import GameFinished from './GameFinished.jsx';
 
 const Game = () => {
   //TODO add styling:
-  //when you try to click the back of a card, it shakes
-  //when there's a match, ding sound & cards size increases temporarily
+  // when you try to click the back of a card, it shakes
+  // when there's a match, ding sound & cards size increases temporarily
+  // add padding to each card
+  // flip animation if no match
+  // ability to turn sound on/off
+  // add cat img to front of card: https://media.istockphoto.com/id/1303646726/vector/doodle-cat-mustache-icon-isolated-on-white-outline-hand-drawing-art-line-sketch-logo-animal.jpg?s=612x612&w=0&k=20&c=41W_rC17pyfN_xNxxNIDL1BBTWXFLqtIYf9LL6z1qPk=
+
 
   const [firstCard, setFirstCard] = useState("");
   const [secondCard, setSecondCard] = useState("");
   const [matches, setMatches] = useState([]);
   const petsData = useRouteLoaderData("root");
-  let petsArr = petsData.data.animals;
+  let petsArr = petsData.data.animals.sort(() => Math.random() - 0.5)
   let firstSelectedPets = petsArr.slice(0, 6);
   const [turn, setTurn] = useState(0);
   const [waiting, setWaiting] = useState(false);
+  const [gameFinshed, setGameFinished] = useState(false);
+  const [matchCount, setMatchCount] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   let firstPetCards = firstSelectedPets.map((petCard, index) => {
     const petDetails = {
@@ -43,6 +52,14 @@ const Game = () => {
     ...secondPetCards,
   ]);
 
+  useEffect(() => {
+    setPetCards(unshuffledCards => {
+      return unshuffledCards.sort(() => Math.random() - 0.5)
+    })
+    setLoading(false);
+  }, [])
+
+
   const setFlipped = (petId, index) => {
     setPetCards((pets) => {
       return pets.map((pet) => {
@@ -63,8 +80,16 @@ const Game = () => {
   };
 
   useEffect(() => {
+    if (matchCount === petCards.length) {
+      setGameFinished(true);
+    }
+  }, [matchCount]);
+
+  useEffect(() => {
     if (firstCard && secondCard) {
       if (firstCard === secondCard) {
+        setMatchCount((matchCount) => matchCount += 2)
+        console.log('matchcount: ', matchCount)
         setPetCards((currPetCards) => {
           return currPetCards.map((currPetCard) => {
             if (currPetCard.id === firstCard) {
@@ -99,26 +124,31 @@ const Game = () => {
     }, 2500);
   };
 
-  useEffect(() => {}, [firstCard, secondCard, turn]);
-
+  if (loading) {
+    return <div>Loading...</div>
+  }
   return (
     <div>
-      <h1 className="text-3xl font-bold underline m-1/2">Flip and match!</h1>
-      <div className="flex flex-row gap-15 flex-wrap">
-        {petCards.map((petCard, i) => (
-          <GameCard
-            key={i}
-            pet={petCard}
-            setFlipped={setFlipped}
-            setTurn={setTurn}
-            turn={turn}
-            waiting={waiting}
-            setFirstCard={setFirstCard}
-            setSecondCard={setSecondCard}
-            matches={matches}
-          />
-        ))}
+      {!gameFinshed ?
+      <div>
+        <h1 className="text-3xl font-bold underline m-1/2">Flip and match!</h1>
+        <div className="flex flex-row gap-15 flex-wrap">
+          {petCards.map((petCard, i) => (
+            <GameCard
+              key={i}
+              pet={petCard}
+              setFlipped={setFlipped}
+              setTurn={setTurn}
+              turn={turn}
+              waiting={waiting}
+              setFirstCard={setFirstCard}
+              setSecondCard={setSecondCard}
+              matches={matches}
+            />
+          ))}
+        </div>
       </div>
+      : <GameFinished />}
     </div>
   );
 };
