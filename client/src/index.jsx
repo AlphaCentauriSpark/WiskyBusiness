@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
 // import './index.css';
 import 'tailwindcss/tailwind.css';
-import petsLoader from './loaders/petsLoader'
+import petsLoader from './loaders/petsLoader';
 import {
   createBrowserRouter,
   createRoutesFromElements,
