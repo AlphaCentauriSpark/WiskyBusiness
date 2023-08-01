@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
 // import './index.css';
 import 'tailwindcss/tailwind.css';
-import petsLoader from './loaders/petsLoader'
+import petsLoader from './loaders/petsLoader';
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -11,7 +11,6 @@ import {
   RouterProvider,
 } from 'react-router-dom';
 import Game from './components/MemoryGame/Game';
-import Card from './components/Card';
 import Catalog from './components/Catalog';
 
 const router = createBrowserRouter(
