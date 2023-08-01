@@ -27,7 +27,7 @@ module.exports.getPets = async (req, res) => {
 };
 
 module.exports.getAnimals = (req, res) => {
-  //console.log(req.query.zip);
+  console.log(req.query.zip);
   axios.defaults.baseURL = 'https://api.petfinder.com/v2/';
   axios({
     method: 'post',

@@ -6,9 +6,10 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const PORT = 3000;
-require('dotenv').config();
+require('dotenv').config()
 
 app.use(express.static(path.join(__dirname)));
+console.log(path.join(__dirname));
 
 app.use(bodyParser.json());
 app.use(morgan('dev'));

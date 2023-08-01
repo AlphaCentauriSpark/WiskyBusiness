@@ -59,7 +59,7 @@ const App = () => {
   };
 
   useEffect(() => {
-    //fetch();
+    fetch();
   }, []);
 
   if (animals !== undefined) {
