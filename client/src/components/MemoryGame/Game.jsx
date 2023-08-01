@@ -1,7 +1,11 @@
 import GameCard from "./GameCard.jsx";
 import { useState, useEffect } from "react";
 import { useRouteLoaderData } from "react-router-dom";
+
 import GameFinished from './GameFinished.jsx';
+
+import io from 'socket.io-client';
+
 
 const Game = () => {
   //TODO add styling:
@@ -124,9 +128,66 @@ const Game = () => {
     }, 2500);
   };
 
+
   if (loading) {
     return <div>Loading...</div>
   }
+
+  useEffect(() => {}, [firstCard, secondCard, turn]);
+  useEffect(() => {
+    // setPetCards([...petCards, petCardArray]);
+    //setPetCards([...petCardArray, ...petCardArray])
+  }, [])
+  
+  useEffect(() => {
+    const socket = io.connect('http://localhost:3000', {
+      reconnectionDelay: 1000,
+      reconnection: true,
+      reconnectionAttemps: 10,
+      transports: ['websocket'],
+      agent: false,
+      upgrade: false,
+      rejectUnauthorized: false
+    }); 
+    // const socket = io(); 
+
+    console.log('connecting to server soon...');
+
+    socket.emit("msg", 5, "4", { 7: Uint8Array.from([8]) });
+
+    socket.on('hello', () => {
+      console.log('Connected to the server');
+      //socket.emit("msg", 5, "4", { 7: Uint8Array.from([8]) });
+ 
+      // Emit a "ready" event to the server when the player is ready to start the game
+      // socket.emit('ready');
+
+      // // Handle the "player_ready" event received from the server
+      // socket.on('player_ready', (data) => {
+      //   console.log('Player', data.player, 'is ready');
+      // });
+
+      // // Example: Sending a "make_move" event to the server with move data
+      // const moveData = {move:'move-data-here'};
+      // socket.emit('make_move', moveData);
+
+      // // Handle the "move_made" event received from the server
+      // socket.on('move_made', (data) => {
+      //   console.log('Player', data.player, 'made a move:', data.move);
+      // });
+    });
+
+    // socket.on('disconnect', () => {
+    //   console.log('Disconnected from the server');
+    // });
+
+    // Clean up the socket connection when the component is unmounted
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+
+
   return (
     <div>
       {!gameFinshed ?
