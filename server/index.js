@@ -20,7 +20,7 @@ const routes = require('./controllers/routes.js');
 // const exampleRoute = require('');
 // const exampleRoute = require('');
 
-app.get('/', routes.getPets);
+// app.get('/', routes.getPets);
 // app.use('/multiplayer', reviewRoute);
 // app.use('/catalog', registerRoute);
 // app.use('/:id', loginRoute);
