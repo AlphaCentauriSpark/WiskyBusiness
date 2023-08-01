@@ -1,55 +1,28 @@
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import Paper from "@mui/material/Paper";
 import Tooltip from "@mui/material/Tooltip";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import LocalLibraryIcon from "@mui/icons-material/LocalLibrary";
 import ShareIcon from "@mui/icons-material/Share";
-import { useState } from "react";
 import AutorenewIcon from "@mui/icons-material/Autorenew";
 
 const GameCard = ({
   pet,
   setFlipped,
-  setTurn,
-  turn,
-  checkMatch,
-  setFirstCard,
-  setSecondCard,
-  matches,
+  waiting,
 }) => {
-  const [isFlipped, setIsFlipped] = useState(false);
-  const [waiting, setWaiting] = useState(false);
-
   const handleFlip = () => {
-    // console.log('pet',pet);
-    setFlipped(pet.id, pet.index);
-    // if(!waiting) {
-    //   if (turn === 0) {
-    //     setTurn(1);
-    //     setIsFlipped(true);
-    //     setFirstCard(pet.id)
-    //   } else {
-    //     setIsFlipped(true);
-    //     setSecondCard(pet.id);
-    //     wait();
-    //   }
-    // }
+    if (!waiting) {
+      setFlipped(pet.id, pet.index);
+      const audio = new Audio("../../public/flipcard-91468.mp3");
+      audio.play();
+    } else {
+      return;
+    }
   };
-
-  const wait = () => {
-    setWaiting(true);
-    setTimeout(() => {
-      setTurn(0);
-      setIsFlipped(false);
-      setWaiting(true);
-    }, 2500);
-  };
-
-  const isMatched = matches.includes(pet.id);
 
   return (
     <div>
@@ -61,7 +34,7 @@ const GameCard = ({
             borderRadius: "15px",
             transition: "box-shadow 0.1s ease",
             "&:hover": {
-              boxShadow: "0 10px 26px rgba(0, 0, 0, 0.1)", // Change the shadow on hover
+              boxShadow: "0 10px 26px rgba(0, 0, 0, 0.1)",
             },
           }}
         >
@@ -99,14 +72,10 @@ const GameCard = ({
             borderRadius: "15px",
             transition: "box-shadow 0.1s ease",
             "&:hover": {
-              boxShadow: "0 10px 26px rgba(0, 0, 0, 0.1)", // Change the shadow on hover
+              boxShadow: "0 10px 26px rgba(0, 0, 0, 0.1)",
             },
           }}
-          onClick={() => {
-            handleFlip();
-            const audio = new Audio("../../public/flipcard-91468.mp3");
-            audio.play();
-          }}
+          onClick={handleFlip}
         >
           <CardMedia sx={{ height: 150, background: "#CDB4DB" }} />
 
