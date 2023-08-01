@@ -17,8 +17,11 @@ const Pet = ({ photo, name, species, gender }) => {
         borderRadius: '15px',
         transition: 'box-shadow 0.1s ease',
         '&:hover': {
-          boxShadow: '0 10px 26px rgba(0, 0, 0, 0.1)', // Change the shadow on hover
+          boxShadow: '0 10px 26px rgba(0, 0, 0, 0.1)',
         },
+        // display: 'flex',
+        // flexDirection: 'column',
+        // justifyContent: 'space-between',
       }}
       onClick={() => {
         const audio = new Audio('../../public/flipcard-91468.mp3');
