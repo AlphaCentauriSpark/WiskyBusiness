@@ -4,20 +4,9 @@ import { useRouteLoaderData } from "react-router-dom";
 import io from 'socket.io-client';
 
 const Game = () => {
-  //4x3 grid
-
-  //states to track: ID,  url,
-
-  //user clicks card (ID #1a)
-  //card flips (#1a changes to flipped, turn 0 -> 1)
-  //when turn is 1, user cannot click back of a card
-  //when you try to click the back, it shakes
-  //user clicks another card (pet ID #5a) that isnt #1a
-  //card flips (#5a changes to flipped, turn 1-- >2)
-  //if turn === 2 && cards don't match
-  //both cards return to the front state, turn is reset to 0
-  //else if they match, setMatched(true)
-  //ding sound! cards pop up! they stay in place. if you click on them they pop up.
+  //TODO add styling:
+  //when you try to click the back of a card, it shakes
+  //when there's a match, ding sound & cards size increases temporarily
 
   const [firstCard, setFirstCard] = useState("");
   const [secondCard, setSecondCard] = useState("");
@@ -25,6 +14,8 @@ const Game = () => {
   const petsData = useRouteLoaderData("root");
   let petsArr = petsData.data.animals;
   let firstSelectedPets = petsArr.slice(0, 6);
+  const [turn, setTurn] = useState(0);
+  const [waiting, setWaiting] = useState(false);
 
   let firstPetCards = firstSelectedPets.map((petCard, index) => {
     const petDetails = {
@@ -48,28 +39,12 @@ const Game = () => {
     return petDetails;
   });
 
-  const [petCards, setPetCards] = useState([...firstPetCards, ...secondPetCards]);
-  const [turn, setTurn] = useState(0);
-
-  console.log(petCards);
-
-  const checkMatch = () => {
-    if (firstCard === secondCard) {
-      console.log("Match!");
-      // setMatches((matches) => [...matches, firstCard]);
-      setFirstCard("");
-      setSecondCard("");
-      return true;
-    } else {
-      setFirstCard("");
-      setSecondCard("");
-      console.log("No match!");
-      return false;
-    }
-  };
+  const [petCards, setPetCards] = useState([
+    ...firstPetCards,
+    ...secondPetCards,
+  ]);
 
   const setFlipped = (petId, index) => {
-    console.log("pet id:", petId);
     setPetCards((pets) => {
       return pets.map((pet) => {
         if (petId === pet.id && index === pet.index) {
@@ -79,45 +54,53 @@ const Game = () => {
       });
     });
 
-    // for (let i = 0; i < petCards.length; i++) {
-    //   if (petCards[i].id === petId) {
-    //     console.log('found card');
-    //     setPetCards({...petCards, [petCards[i].isFlipped]:true})
-    //   }
-    // }
-
-    console.log("petCard in flipped", petCards[0].isFlipped);
     if (turn === 0) {
       setFirstCard(petId);
       setTurn(1);
     } else {
       setSecondCard(petId);
-      checkMatch();
-      //wait();
       setTurn(0);
     }
   };
 
-  // useEffect(() => {
-  //   if (firstCard && secondCard) {
-  //     checkMatch();
-  //   }
-  // }, [secondCard]);
-
-  // const wait = () => {
-  //   setTimeout(() => {
-  //     setTurn(0);
-  //     setIsFlipped(false);
-  //     setWaiting(true);
-  //   }, 2500);
-  // };
-
   useEffect(() => {
-    console.log("turn: ", turn);
-    console.log("firstCard: ", firstCard);
-    console.log("secondCard: ", secondCard);
-  }, [firstCard, secondCard, turn]);
+    if (firstCard && secondCard) {
+      if (firstCard === secondCard) {
+        setPetCards((currPetCards) => {
+          return currPetCards.map((currPetCard) => {
+            if (currPetCard.id === firstCard) {
+              currPetCard.isMatched = true;
+            }
+            return currPetCard;
+          });
+        });
+        setFirstCard("");
+        setSecondCard("");
+      } else {
+        setFirstCard("");
+        setSecondCard("");
+        wait();
+      }
+    }
+  }, [secondCard]);
 
+  const wait = () => {
+    setWaiting(true);
+    setTimeout(() => {
+      setTurn(0);
+      setPetCards((currPetCards) => {
+        return currPetCards.map((currPetCard) => {
+          if (currPetCard.id === firstCard || currPetCard.id === secondCard) {
+            currPetCard.isFlipped = false;
+          }
+          return currPetCard;
+        });
+      });
+      setWaiting(false);
+    }, 2500);
+  };
+
+  useEffect(() => {}, [firstCard, secondCard, turn]);
   useEffect(() => {
     // setPetCards([...petCards, petCardArray]);
     //setPetCards([...petCardArray, ...petCardArray])
@@ -182,7 +165,7 @@ const Game = () => {
             setFlipped={setFlipped}
             setTurn={setTurn}
             turn={turn}
-            checkMatch={checkMatch}
+            waiting={waiting}
             setFirstCard={setFirstCard}
             setSecondCard={setSecondCard}
             matches={matches}
