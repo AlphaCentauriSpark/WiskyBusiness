@@ -9,7 +9,7 @@ const GameFinished = () => {
       <p>GAME FINISHED!</p>
       <Confetti
       width={600}
-      height={window.innerHeight}
+      height={600}
     />
     </div>
   )
