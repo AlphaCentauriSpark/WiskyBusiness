@@ -39,7 +39,7 @@ const App = () => {
   };
 
   useEffect(() => {
-    fetch();
+    //fetch();
   }, []);
 
 
