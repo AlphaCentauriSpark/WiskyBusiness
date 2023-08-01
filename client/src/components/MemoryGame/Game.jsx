@@ -24,6 +24,7 @@ const Game = () => {
   const petsData = useRouteLoaderData("root");
   let petsArr = petsData.data.animals;
   let firstSelectedPets = petsArr.slice(0, 6);
+  const [turn, setTurn] = useState(0);
 
   let firstPetCards = firstSelectedPets.map((petCard, index) => {
     const petDetails = {
@@ -48,24 +49,6 @@ const Game = () => {
   });
 
   const [petCards, setPetCards] = useState([...firstPetCards, ...secondPetCards]);
-  const [turn, setTurn] = useState(0);
-
-  console.log(petCards);
-
-  const checkMatch = () => {
-    if (firstCard === secondCard) {
-      console.log("Match!");
-      // setMatches((matches) => [...matches, firstCard]);
-      setFirstCard("");
-      setSecondCard("");
-      return true;
-    } else {
-      setFirstCard("");
-      setSecondCard("");
-      console.log("No match!");
-      return false;
-    }
-  };
 
   const setFlipped = (petId, index) => {
     console.log("pet id:", petId);
@@ -91,25 +74,52 @@ const Game = () => {
       setTurn(1);
     } else {
       setSecondCard(petId);
-      checkMatch();
-      //wait();
       setTurn(0);
     }
   };
 
-  // useEffect(() => {
-  //   if (firstCard && secondCard) {
-  //     checkMatch();
-  //   }
-  // }, [secondCard]);
+  useEffect(() => {
+    if (firstCard && secondCard) {
+      console.log('this is the check match: ', firstCard, secondCard)
+      if (firstCard === secondCard) {
+        console.log("Match!");
+        // setMatches((matches) => [...matches, firstCard]);
+        setPetCards(currPetCards => {
+          return currPetCards.map(currPetCard => {
+            if (currPetCard.id === firstCard) {
+              currPetCard.isMatched = true;
+            }
+            return currPetCard;
+          })
+        })
+        setFirstCard("");
+        setSecondCard("");
+      } else {
+        setFirstCard("");
+        setSecondCard("");
+        console.log("No match!");
+        wait()
+      }
+    }
+  }, [secondCard]);
 
-  // const wait = () => {
-  //   setTimeout(() => {
-  //     setTurn(0);
-  //     setIsFlipped(false);
-  //     setWaiting(true);
-  //   }, 2500);
-  // };
+  const wait = () => {
+    setTimeout(() => {
+      setTurn(0);
+      console.log('no match')
+      setPetCards(currPetCards => {
+        return currPetCards.map(currPetCard => {
+          if (currPetCard.id === firstCard || currPetCard.id === secondCard) {
+            currPetCard.isFlipped = false;
+          }
+          return currPetCard;
+        })
+      })
+      console.log('wait has been called')
+      // setIsFlipped(false);
+     // setWaiting(true);
+    }, 2500);
+  };
 
   useEffect(() => {
     console.log("turn: ", turn);
@@ -133,7 +143,7 @@ const Game = () => {
             setFlipped={setFlipped}
             setTurn={setTurn}
             turn={turn}
-            checkMatch={checkMatch}
+            // checkMatch={checkMatch}
             setFirstCard={setFirstCard}
             setSecondCard={setSecondCard}
             matches={matches}
