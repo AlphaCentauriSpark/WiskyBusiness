@@ -31,7 +31,7 @@ const GameCard = ({
       {pet.isFlipped || pet.isMatched ? (
         <button className="flex flex-col h-64 w-48 rounded-3xl">
           <img className="pet-image h-full w-auto border rounded-t-3xl object-cover" src={pet.photo}></img>
-          <div className="pet-info bg-white h-full w-full rounded-b-3xl">{pet.name}</div>
+          <div className="pet-info bg-white h-full w-full rounded-b-3xl font-comico-regular">{pet.name}</div>
         </button>
         // <Card
         //   className="flipped-card"
