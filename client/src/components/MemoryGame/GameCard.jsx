@@ -66,37 +66,26 @@ const GameCard = ({
           </CardActions>
         </Card>
       ) : (
-        <Card
-          sx={{
-            maxWidth: 200,
-            borderRadius: "15px",
-            transition: "box-shadow 0.1s ease",
-            "&:hover": {
-              boxShadow: "0 10px 26px rgba(0, 0, 0, 0.1)",
-            },
-          }}
-          onClick={handleFlip}
-        >
-          <CardMedia sx={{ height: 150, background: "#CDB4DB" }} />
+        <div className="h-64 w-48 mr-16 min-w bg-gradient-to-r from-light-purple to-light-pink rounded-3xl shadow-lg flex items-center justify-center text-7xl">
+          <i className="fa-solid fa-paw text-medium-pink text-shadow-lg"></i>
+        </div>
+        // <Card
+        //   sx={{
+        //     maxWidth: 200,
+        //     borderRadius: "15px",
+        //     transition: "box-shadow 0.1s ease",
+        //     "&:hover": {
+        //       boxShadow: "0 10px 26px rgba(0, 0, 0, 0.1)",
+        //     },
+        //   }}
+        //   onClick={handleFlip}
+        // >
+        //   <CardMedia sx={{ height: 150, background: "#CDB4DB" }} />
 
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
-              !isFlipped
-            </Typography>
-          </CardContent>
-          <CardActions>
-            <Tooltip>
-              <Button>
-                <AutorenewIcon />
-              </Button>
-            </Tooltip>
-            <Tooltip title="Share">
-              <Button>
-                <AutorenewIcon />
-              </Button>
-            </Tooltip>
-          </CardActions>
-        </Card>
+        //   <CardContent>
+        //     <i className="fa-solid fa-paw"></i>
+        //   </CardContent>
+        // </Card>
       )}
     </div>
   );
