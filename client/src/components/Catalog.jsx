@@ -1,6 +1,7 @@
 import axios from 'axios';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
@@ -15,10 +16,16 @@ const Catalog = () => {
   const [genderFilter, setGenderFilter] = useState('all');
   const animals = useContext(AnimalContext);
 
-  // console.log(animals);
   return (
-    <>
-      <Box>
+    <Stack
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        paddingTop: '20px',
+        alignItems: 'center',
+      }}
+    >
+      <Box sx={{ paddingBottom: '20px' }}>
         <FormControl variant="outlined" sx={{ minWidth: 120 }}>
           <InputLabel id="Species Filter">Species</InputLabel>
           <Select
@@ -87,7 +94,7 @@ const Catalog = () => {
             }
           })}
       </Grid>
-    </>
+    </Stack>
   );
 };
 
