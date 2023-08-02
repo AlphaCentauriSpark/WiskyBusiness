@@ -31,7 +31,6 @@ const App = () => {
             });
           })
           .then((response) => {
-            console.log('AXIOS RESPONSE IN APP', response.data);
             setAnimals(response.data);
           })
           .catch((error) => {
@@ -48,7 +47,6 @@ const App = () => {
               },
             })
             .then((response) => {
-              console.log('AXIOS RESPONSE IN APP', response.data);
               setAnimals(response.data);
             })
             .catch((error) => {
@@ -67,12 +65,18 @@ const App = () => {
     return (
       <AnimalContext.Provider value={animals}>
         <PetContext.Provider value={[currentPet, setCurrentPet]}>
-          <Stack m={2}>
-            <h1 className="text-3xl font-bold underline">Hello world!</h1>
-            <Link to="/home">HomePage</Link>
-            <Link to="/catalog">Catalog</Link>
-            <Outlet />
-          </Stack>
+
+          <div className="flex flex-row gap-10 bg-gradient-to-r from-pink-500 via-pink-400/70 to-pink-500 items-center justify-evenly py-5 text-white font-comico-regular">
+
+            <div>
+              <Link className="rounded-full bg-pink-300 p-4 hover:bg-sky-300/80 transition-colors duration-150" to="/home">Play The Game!</Link>
+            </div>
+            <p className="text-5xl font-bold font-comico-regular text-shadow-lg">Whisky <i className="fa-solid fa-paw text-neutral-50 text-shadow-lg"></i> Business</p>
+            <div>
+              <Link className="rounded-full bg-pink-300 p-4 hover:bg-sky-300/80 transition-colors duration-150" to="/catalog">Catalog</Link>
+            </div>
+          </div>
+          <Outlet />
         </PetContext.Provider>
       </AnimalContext.Provider>
     );

@@ -1,6 +1,6 @@
-import GameCard from "./GameCard.jsx";
-import { useState, useEffect } from "react";
-import { useRouteLoaderData } from "react-router-dom";
+import GameCard from './GameCard.jsx';
+import { useState, useEffect } from 'react';
+import { useRouteLoaderData } from 'react-router-dom';
 
 import GameFinished from './GameFinished.jsx';
 
@@ -25,37 +25,43 @@ const Game = () => {
   // ability to turn sound on/off
   // add cat img to front of card: https://media.istockphoto.com/id/1303646726/vector/doodle-cat-mustache-icon-isolated-on-white-outline-hand-drawing-art-line-sketch-logo-animal.jpg?s=612x612&w=0&k=20&c=41W_rC17pyfN_xNxxNIDL1BBTWXFLqtIYf9LL6z1qPk=
 
-
-  const [firstCard, setFirstCard] = useState("");
-  const [secondCard, setSecondCard] = useState("");
+  const [firstCard, setFirstCard] = useState('');
+  const [secondCard, setSecondCard] = useState('');
   const [matches, setMatches] = useState([]);
-  const petsData = useRouteLoaderData("root");
-  let petsArr = petsData.data.animals.sort(() => Math.random() - 0.5)
-  let firstSelectedPets = petsArr.slice(0, 6);
+  const petsData = useRouteLoaderData('root');
   const [turn, setTurn] = useState(0);
   const [waiting, setWaiting] = useState(false);
   const [gameFinshed, setGameFinished] = useState(false);
   const [matchCount, setMatchCount] = useState(0);
   const [loading, setLoading] = useState(true);
 
-  let firstPetCards = firstSelectedPets.map((petCard, index) => {
-    const petDetails = {
-      id: petCard.id,
-      index: index,
-      name: petCard.name,
-      isMatched: false,
-      isFlipped: false,
-    };
-    return petDetails;
+  // Filter petsArr to only pets with images
+  let petsArr = petsData.data.animals.sort(() => Math.random() - 0.5);
+
+  let allPets = petsArr.filter((pets) => {
+    return pets["primary_photo_cropped"] !== null
+  }).slice(0, 6)
+
+  let firstPetCards = allPets.map((petCard, index) => {
+      const petDetails = {
+        id: petCard.id,
+        index: index,
+        name: petCard.name,
+        isMatched: false,
+        isFlipped: false,
+        photo: petCard["primary_photo_cropped"].small
+      }
+      return petDetails;
   });
 
-  let secondPetCards = firstSelectedPets.map((petCard, index) => {
+  let secondPetCards = allPets.map((petCard, index) => {
     const petDetails = {
       id: petCard.id,
       index: index + 6,
       name: petCard.name,
       isMatched: false,
       isFlipped: false,
+      photo: petCard["primary_photo_cropped"].small
     };
     return petDetails;
   });
@@ -65,13 +71,14 @@ const Game = () => {
     ...secondPetCards,
   ]);
 
-  useEffect(() => {
-    setPetCards(unshuffledCards => {
-      return unshuffledCards.sort(() => Math.random() - 0.5)
-    })
-    setLoading(false);
-  }, [])
+  console.log('these are the final pet cards: ', petCards)
 
+  useEffect(() => {
+    setPetCards((unshuffledCards) => {
+      return unshuffledCards.sort(() => Math.random() - 0.5);
+    });
+    setLoading(false);
+  }, []);
 
   const setFlipped = (petId, index) => {
     const moveData = { move: 'move-data-here' };
@@ -105,8 +112,8 @@ const Game = () => {
   useEffect(() => {
     if (firstCard && secondCard) {
       if (firstCard === secondCard) {
-        setMatchCount((matchCount) => matchCount += 2)
-        console.log('matchcount: ', matchCount)
+        setMatchCount((matchCount) => (matchCount += 2));
+        console.log('matchcount: ', matchCount);
         setPetCards((currPetCards) => {
           return currPetCards.map((currPetCard) => {
             if (currPetCard.id === firstCard) {
@@ -115,11 +122,11 @@ const Game = () => {
             return currPetCard;
           });
         });
-        setFirstCard("");
-        setSecondCard("");
+        setFirstCard('');
+        setSecondCard('');
       } else {
-        setFirstCard("");
-        setSecondCard("");
+        setFirstCard('');
+        setSecondCard('');
         wait();
       }
     }
@@ -138,11 +145,11 @@ const Game = () => {
         });
       });
       setWaiting(false);
-    }, 2500);
+    }, 2000);
   };
 
   useEffect(() => {}, [firstCard, secondCard, turn]);
-  
+
   useEffect(() => {
     
     // setSocket(io.connect('http://localhost:3000', {
@@ -156,14 +163,16 @@ const Game = () => {
     // })); 
     // const socket = io(); 
 
+
     // console.log('connecting to server soon...');
 
     // socket.emit("msg", 5, "4", { 7: Uint8Array.from([8]) });
 
+
     socket.on('connect', () => {
       console.log('Connected to the server');
       //socket.emit("msg", 5, "4", { 7: Uint8Array.from([8]) });
- 
+
       // Emit a "ready" event to the server when the player is ready to start the game
       socket.emit('ready');
 
@@ -193,30 +202,35 @@ const Game = () => {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>
+    return <div>Loading...</div>;
   }
+  
   return (
-    <div>
-      {!gameFinshed ?
-      <div>
-        <h1 className="text-3xl font-bold underline m-1/2">Flip and match!</h1>
-        <div className="flex flex-row gap-15 flex-wrap">
-          {petCards.map((petCard, i) => (
-            <GameCard
-              key={i}
-              pet={petCard}
-              setFlipped={setFlipped}
-              setTurn={setTurn}
-              turn={turn}
-              waiting={waiting}
-              setFirstCard={setFirstCard}
-              setSecondCard={setSecondCard}
-              matches={matches}
-            />
-          ))}
+    <div className="flex items-center justify-center">
+      {!gameFinshed ? (
+        <div className="flex items-center flex-col justify-center gap-5 mt-14">
+          <h1 className="text-4xl font-bold font-comico-regular mb-10 ml-5 text-medium-pink text-shadow-xl">
+            Flip and match!
+          </h1>
+          <div className="grid grid-cols-6 gap-6 w-4/5 justify-center">
+            {petCards.map((petCard, i) => (
+              <GameCard
+                key={i}
+                pet={petCard}
+                setFlipped={setFlipped}
+                setTurn={setTurn}
+                turn={turn}
+                waiting={waiting}
+                setFirstCard={setFirstCard}
+                setSecondCard={setSecondCard}
+                matches={matches}
+              />
+            ))}
+          </div>
         </div>
-      </div>
-      : <GameFinished />}
+      ) : (
+        <GameFinished />
+      )}
     </div>
   );
 };

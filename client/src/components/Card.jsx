@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import LocalLibraryIcon from '@mui/icons-material/LocalLibrary';
 import ShareIcon from '@mui/icons-material/Share';
-import { useContext} from 'react';
+import { useContext, useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PetContext } from '../App';
 
@@ -19,8 +19,16 @@ const Pet = ({ photo, name, species, gender, animal }) => {
   const navigate = useNavigate();
 
   const handleCardClick = (evt) => {
-    console.log('animal: ', animal)
     setCurrentPet(JSON.parse(evt.currentTarget.getAttribute("data-animal")))
+    if (localStorage.getItem('viewedPets') === null) {
+      let arr = [];
+      arr.push(JSON.parse(evt.currentTarget.getAttribute("data-animal")).id);
+      localStorage.setItem('viewedPets', JSON.stringify(arr));
+    } else {
+      let lsNew = JSON.parse(localStorage.getItem('viewedPets'));
+      lsNew.push(JSON.parse(evt.currentTarget.getAttribute("data-animal")).id);
+      localStorage.setItem('viewedPets', JSON.stringify(lsNew))
+    }
     navigate("/profile")
   }
 
@@ -33,9 +41,6 @@ const Pet = ({ photo, name, species, gender, animal }) => {
         '&:hover': {
           boxShadow: '0 10px 26px rgba(0, 0, 0, 0.1)',
         },
-        // display: 'flex',
-        // flexDirection: 'column',
-        // justifyContent: 'space-between',
       }}
       data-animal={JSON.stringify(animal)}
       onClick={(evt) => {
