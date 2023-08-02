@@ -23,6 +23,7 @@ const Catalog = () => {
         justifyContent: 'center',
         paddingTop: '20px',
         alignItems: 'center',
+        m: 3,
       }}
     >
       <Box sx={{ paddingBottom: '20px' }}>
