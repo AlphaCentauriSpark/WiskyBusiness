@@ -71,7 +71,7 @@ const App = () => {
             <div>
               <Link className="rounded-full bg-pink-400/80 p-4 hover:bg-sky-300/80 transition-colors duration-150" to="/home">Play The Game!</Link>
             </div>
-            <p className="text-3xl font-comico-regular text-shadow-lg">Whisky Business</p>
+            <p className="text-5xl font-bold font-comico-regular text-shadow-lg">Whisky Business</p>
             <div>
               <Link className="rounded-full bg-pink-400/80 p-4 hover:bg-sky-300/80 transition-colors duration-150" to="/catalog">Catalog</Link>
             </div>
