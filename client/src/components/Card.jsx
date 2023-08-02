@@ -41,9 +41,6 @@ const Pet = ({ photo, name, species, gender, animal }) => {
         '&:hover': {
           boxShadow: '0 10px 26px rgba(0, 0, 0, 0.1)',
         },
-        // display: 'flex',
-        // flexDirection: 'column',
-        // justifyContent: 'space-between',
       }}
       data-animal={JSON.stringify(animal)}
       onClick={(evt) => {

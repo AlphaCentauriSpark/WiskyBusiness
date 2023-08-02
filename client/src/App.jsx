@@ -65,15 +65,18 @@ const App = () => {
     return (
       <AnimalContext.Provider value={animals}>
         <PetContext.Provider value={[currentPet, setCurrentPet]}>
-            <nav className="relative container mx-auto p-6">
-              <div className="flex items-center justify-between"></div>
-                <h1 className="text-3xl font-bold underline">Whisky Business!</h1>
-              <div className="flex space-x-6 hover:text-blue">
-                <Link to="/home" className="hover:text-sky-500">HomePage</Link>
-                <Link to="/catalog" className="hover:text-sky-500">Catalog</Link>
-              </div>
-            </nav>
-            <Outlet />
+
+          <div className="flex flex-row gap-10 bg-gradient-to-r from-pink-500 via-pink-400/70 to-pink-500 items-center justify-evenly py-5 text-white font-comico-regular">
+
+            <div>
+              <Link className="rounded-full bg-pink-300 p-4 hover:bg-sky-300/80 transition-colors duration-150" to="/home">Play The Game!</Link>
+            </div>
+            <p className="text-5xl font-bold font-comico-regular text-shadow-lg">Whisky <i className="fa-solid fa-paw text-neutral-50 text-shadow-lg"></i> Business</p>
+            <div>
+              <Link className="rounded-full bg-pink-300 p-4 hover:bg-sky-300/80 transition-colors duration-150" to="/catalog">Catalog</Link>
+            </div>
+          </div>
+          <Outlet />
         </PetContext.Provider>
       </AnimalContext.Provider>
     );
