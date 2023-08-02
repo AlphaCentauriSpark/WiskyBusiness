@@ -74,7 +74,7 @@ const Catalog = () => {
           .map((animal, index) => {
             if (animal.primary_photo_cropped) {
               return (
-                <Grid item xs={6} sm={3} md={2} lg={1.5} key={index}>
+                <Grid key={Math.random()} item xs={6} sm={3} md={2} lg={1.5}>
                   <Card
                     photo={animal.primary_photo_cropped.small}
                     name={animal.name}
