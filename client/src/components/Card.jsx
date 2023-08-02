@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import LocalLibraryIcon from '@mui/icons-material/LocalLibrary';
 import ShareIcon from '@mui/icons-material/Share';
-import { useContext} from 'react';
+import { useContext, useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PetContext } from '../App';
 
@@ -20,6 +20,15 @@ const Pet = ({ photo, name, species, gender, animal }) => {
 
   const handleCardClick = (evt) => {
     setCurrentPet(JSON.parse(evt.currentTarget.getAttribute("data-animal")))
+    if (localStorage.getItem('viewedPets') === null) {
+      let arr = [];
+      arr.push(JSON.parse(evt.currentTarget.getAttribute("data-animal")).id);
+      localStorage.setItem('viewedPets', JSON.stringify(arr));
+    } else {
+      let lsNew = JSON.parse(localStorage.getItem('viewedPets'));
+      lsNew.push(JSON.parse(evt.currentTarget.getAttribute("data-animal")).id);
+      localStorage.setItem('viewedPets', JSON.stringify(lsNew))
+    }
     navigate("/profile")
   }
 
