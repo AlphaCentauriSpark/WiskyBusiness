@@ -31,7 +31,6 @@ const App = () => {
             });
           })
           .then((response) => {
-            console.log('AXIOS RESPONSE IN APP', response.data);
             setAnimals(response.data);
           })
           .catch((error) => {
@@ -48,7 +47,6 @@ const App = () => {
               },
             })
             .then((response) => {
-              console.log('AXIOS RESPONSE IN APP', response.data);
               setAnimals(response.data);
             })
             .catch((error) => {
@@ -67,12 +65,15 @@ const App = () => {
     return (
       <AnimalContext.Provider value={animals}>
         <PetContext.Provider value={[currentPet, setCurrentPet]}>
-          <Stack m={2}>
-            <h1 className="text-3xl font-bold underline">Hello world!</h1>
-            <Link to="/home">HomePage</Link>
-            <Link to="/catalog">Catalog</Link>
+            <nav className="relative container mx-auto p-6">
+              <div className="flex items-center justify-between"></div>
+                <h1 className="text-3xl font-bold underline">Whisky Business!</h1>
+              <div className="flex space-x-6 hover:text-blue">
+                <Link to="/home" className="hover:text-sky-500">HomePage</Link>
+                <Link to="/catalog" className="hover:text-sky-500">Catalog</Link>
+              </div>
+            </nav>
             <Outlet />
-          </Stack>
         </PetContext.Provider>
       </AnimalContext.Provider>
     );

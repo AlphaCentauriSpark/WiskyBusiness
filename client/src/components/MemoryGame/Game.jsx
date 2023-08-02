@@ -128,17 +128,12 @@ const Game = () => {
     }, 2500);
   };
 
-
-  if (loading) {
-    return <div>Loading...</div>
-  }
-
   useEffect(() => {}, [firstCard, secondCard, turn]);
   useEffect(() => {
     // setPetCards([...petCards, petCardArray]);
     //setPetCards([...petCardArray, ...petCardArray])
   }, [])
-  
+
   useEffect(() => {
     const socket = io.connect('http://localhost:3000', {
       reconnectionDelay: 1000,
@@ -148,8 +143,8 @@ const Game = () => {
       agent: false,
       upgrade: false,
       rejectUnauthorized: false
-    }); 
-    // const socket = io(); 
+    });
+    // const socket = io();
 
     console.log('connecting to server soon...');
 
@@ -158,7 +153,7 @@ const Game = () => {
     socket.on('hello', () => {
       console.log('Connected to the server');
       //socket.emit("msg", 5, "4", { 7: Uint8Array.from([8]) });
- 
+
       // Emit a "ready" event to the server when the player is ready to start the game
       // socket.emit('ready');
 
@@ -187,6 +182,9 @@ const Game = () => {
     };
   }, []);
 
+  if (loading) {
+    return <div>Loading...</div>
+  }
 
   return (
     <div>
