@@ -19,32 +19,39 @@ const Game = () => {
   const [secondCard, setSecondCard] = useState('');
   const [matches, setMatches] = useState([]);
   const petsData = useRouteLoaderData('root');
-  let petsArr = petsData.data.animals.sort(() => Math.random() - 0.5);
-  let firstSelectedPets = petsArr.slice(0, 6);
   const [turn, setTurn] = useState(0);
   const [waiting, setWaiting] = useState(false);
   const [gameFinshed, setGameFinished] = useState(false);
   const [matchCount, setMatchCount] = useState(0);
   const [loading, setLoading] = useState(true);
 
-  let firstPetCards = firstSelectedPets.map((petCard, index) => {
-    const petDetails = {
-      id: petCard.id,
-      index: index,
-      name: petCard.name,
-      isMatched: false,
-      isFlipped: false,
-    };
-    return petDetails;
+  // Filter petsArr to only pets with images
+  let petsArr = petsData.data.animals.sort(() => Math.random() - 0.5);
+
+  let allPets = petsArr.filter((pets) => {
+    return pets["primary_photo_cropped"] !== null
+  }).slice(0, 6)
+
+  let firstPetCards = allPets.map((petCard, index) => {
+      const petDetails = {
+        id: petCard.id,
+        index: index,
+        name: petCard.name,
+        isMatched: false,
+        isFlipped: false,
+        photo: petCard["primary_photo_cropped"].small
+      }
+      return petDetails;
   });
 
-  let secondPetCards = firstSelectedPets.map((petCard, index) => {
+  let secondPetCards = allPets.map((petCard, index) => {
     const petDetails = {
       id: petCard.id,
       index: index + 6,
       name: petCard.name,
       isMatched: false,
       isFlipped: false,
+      photo: petCard["primary_photo_cropped"].small
     };
     return petDetails;
   });
@@ -53,6 +60,8 @@ const Game = () => {
     ...firstPetCards,
     ...secondPetCards,
   ]);
+
+  console.log('these are the final pet cards: ', petCards)
 
   useEffect(() => {
     setPetCards((unshuffledCards) => {
@@ -122,7 +131,7 @@ const Game = () => {
         });
       });
       setWaiting(false);
-    }, 2500);
+    }, 2000);
   };
 
   useEffect(() => {}, [firstCard, secondCard, turn]);
@@ -185,11 +194,11 @@ const Game = () => {
   return (
     <div className="flex items-center justify-center">
       {!gameFinshed ? (
-        <div className="flex items-center flex-col justify-center gap-5 mt-16">
-          <h1 className="text-3xl font-bold font-comico-regular mb-10 ml-5 text-medium-pink text-shadow-xl">
+        <div className="flex items-center flex-col justify-center gap-5 mt-14">
+          <h1 className="text-4xl font-bold font-comico-regular mb-10 ml-5 text-medium-pink text-shadow-xl">
             Flip and match!
           </h1>
-          <div className="grid grid-cols-6 gap-4 w-4/5 justify-center">
+          <div className="grid grid-cols-6 gap-6 w-4/5 justify-center">
             {petCards.map((petCard, i) => (
               <GameCard
                 key={i}
