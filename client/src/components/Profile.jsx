@@ -8,6 +8,8 @@ const Profile = () => {
 
   let { id } = useParams();
 
+  console.log(id)
+
   let alreadySaved = false;
   let localStore = JSON.parse(localStorage.getItem('savedPets'));
   localStore.map((element) => {
@@ -67,10 +69,10 @@ const Profile = () => {
           <div className="flex flex-row">
 
             {alreadySaved === false
-            ? <button className="rounded-full bg-pink-300 p-4 hover:bg-sky-300/80 transition-colors duration-150 w-48 mr-40" onClick={handleSaveClick} data-animal={JSON.stringify(currentPet)}>Save Me</button>
-            :<button className="rounded-full bg-pink-300 p-4 hover:bg-sky-300/80 transition-colors duration-150 w-48 mr-40" data-animal={JSON.stringify(currentPet)}>Remove from Saved</button>
+            ? <button className="rounded-full bg-pink-300 p-4 hover:bg-sky-300/80 transition-colors duration-150 w-48 mr-40" onClick={handleSaveClick} data-animal={JSON.stringify(currentPet)}>Add to Favorites</button>
+            :<button className="rounded-full bg-pink-300 p-4 hover:bg-sky-300/80 transition-colors duration-150 w-48 mr-40" data-animal={JSON.stringify(currentPet)}>Remove from Favorites</button>
             }
-            <button className="rounded-full bg-pink-300 p-4 hover:bg-sky-300/80 transition-colors duration-150 w-48">See Saved Pets</button>
+            <button className="rounded-full bg-pink-300 p-4 hover:bg-sky-300/80 transition-colors duration-150 w-52">See Your Favorite Pets</button>
           </div>
         </div>
       </div>
