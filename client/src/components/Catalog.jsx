@@ -80,6 +80,7 @@ const Catalog = () => {
                     name={animal.name}
                     species={animal.species}
                     gender={animal.gender}
+                    animal={animal}
                   />
                 </Grid>
               );
