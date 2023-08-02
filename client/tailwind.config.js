@@ -2,8 +2,9 @@
 export default {
   content: [
     "./index.html",
-    "./src/**/*.{html,js,ts,jsx,tsx}",
+    "./src/**/*.{html,js,ts,jsx,tsx}*",
   ],
+  mode: 'jit',
   theme: {
     extend: {
       fontFamily: {

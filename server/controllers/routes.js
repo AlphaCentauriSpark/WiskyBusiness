@@ -5,20 +5,6 @@ const data = require('./seed.js');
 
 module.exports.getPets = async (req, res) => {
   try {
-    // let location = req.query.location;
-    // console.log('req.query: ', req.query)
-    // console.log('req.query.location: ', req.query.location)
-    // const response = await axios.get(`https://api.petfinder.com/v2/animals`, {
-    //   headers: {
-    //     Authorization: `Bearer ${process.env.API_KEY_HEADER}`
-    //   },
-    //   params: {
-    //     // ...req.query,
-    //     // gender: 'male',
-    //     sort: 'distance',
-    //     limit: 20
-    //   }
-    // });
     res.status(200).send(data);
   } catch (error) {
     console.log(error.message || error);
@@ -39,7 +25,6 @@ module.exports.getAnimals = (req, res) => {
     },
   })
     .then((tokenObj) => {
-      console.log(tokenObj);
       let token = tokenObj.data.token_type + ' ' + tokenObj.data.access_token;
       let category = `animals/?location=${req.query.zip}&limit=75`;
       axios({

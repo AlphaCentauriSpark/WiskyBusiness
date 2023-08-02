@@ -6,7 +6,6 @@ import { PetContext } from '../App';
 
 const Profile = () => {
   const currentPet = useContext(PetContext)[0];
-  console.log('currentPet: ', currentPet);
   return (
     <div>
       <h1 className="text-3xl font-bold underline">{currentPet.description}</h1>

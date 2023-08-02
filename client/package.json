@@ -8,6 +8,8 @@
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
+    "build:tailwind": "npx tailwindcss -i ./index.css -o ./dist/output.css",
+    "watch:tailwind": "npx tailwindcss -i ./index.css -o ./dist/output.css --watch",
     "styles": "npx tailwindcss -i ./index.css -o ./dist/output.css --watch"
   },
   "dependencies": {
