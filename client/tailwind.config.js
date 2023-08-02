@@ -18,6 +18,14 @@ export default {
         default: '0 2px 5px rgba(0, 0, 0, 0.5)',
         lg: '0 2px 10px rgba(0, 0, 0, 0.5)',
       },
+      colors: {
+        "dark-pink": "#610023",
+        "medium-pink": "#880031",
+        "light-purple": "#CDB4DB",
+        "light-pink": "#FFC8DD",
+        "light-blue": "BDE0FE",
+        "dark-blue": "A2D2FF"
+      }
     },
   },
   plugins: [

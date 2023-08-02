@@ -67,7 +67,7 @@ const App = () => {
     return (
       <AnimalContext.Provider value={animals}>
         <PetContext.Provider value={[currentPet, setCurrentPet]}>
-          <div className="flex flex-row gap-10 bg-pink-400/80 items-center justify-evenly p-5 text-white font-comico-regular">
+          <div className="flex flex-row gap-10 bg-pink-400/80 items-center justify-evenly py-5 text-white font-comico-regular">
             <div>
               <Link className="rounded-full bg-pink-400/80 p-4 hover:bg-sky-300/80 transition-colors duration-150" to="/home">Play The Game!</Link>
             </div>

@@ -183,13 +183,13 @@ const Game = () => {
     return <div>Loading...</div>;
   }
   return (
-    <div>
+    <div className="flex items-center justify-center">
       {!gameFinshed ? (
-        <div>
-          <h1 className="text-3xl font-bold underline m-1/2">
+        <div className="flex items-center flex-col justify-center gap-5 mt-16">
+          <h1 className="text-3xl font-bold font-comico-regular mb-10 ml-5 text-medium-pink text-shadow-xl">
             Flip and match!
           </h1>
-          <div className="flex flex-row gap-15 flex-wrap">
+          <div className="grid grid-cols-6 gap-4 w-4/5 justify-center">
             {petCards.map((petCard, i) => (
               <GameCard
                 key={i}
