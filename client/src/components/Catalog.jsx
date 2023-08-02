@@ -7,15 +7,20 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Card from './Card.jsx';
 import { AnimalContext } from '../App';
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
+import { HomeContext } from '../App.jsx';
 
 const Catalog = () => {
   const [speciesFilter, setSpeciesFilter] = useState('all');
   const [sizeFilter, setSizeFilter] = useState('all');
   const [genderFilter, setGenderFilter] = useState('all');
   const animals = useContext(AnimalContext);
+  const setHomeStatus = useContext(HomeContext)
 
-  // console.log(animals);
+  useEffect(() => {
+    setHomeStatus(false);
+  }, [])
+
   return (
     <>
       <Box>
