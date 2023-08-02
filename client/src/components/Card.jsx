@@ -42,12 +42,11 @@ const Pet = ({ photo, name, species, gender, animal }) => {
           boxShadow: '0 10px 26px rgba(0, 0, 0, 0.1)',
         },
       }}
-      data-animal={JSON.stringify(animal)}
+    >
+      <CardMedia sx={{ height: 150 }} image={photo} title="lil cat" data-animal={JSON.stringify(animal)} style={{cursor: "pointer"}}
       onClick={(evt) => {
         handleCardClick(evt);
-      }}
-    >
-      <CardMedia sx={{ height: 150 }} image={photo} title="lil cat" />
+      }}/>
 
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
