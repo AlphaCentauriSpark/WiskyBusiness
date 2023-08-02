@@ -11,9 +11,13 @@ import IosShareOutlinedIcon from '@mui/icons-material/IosShareOutlined';
 import { useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PetContext } from '../App';
+import { useCookies } from 'react-cookie';
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
 
 const Pet = ({ photo, name, species, gender, animal }) => {
   const setCurrentPet = useContext(PetContext)[1];
+  const [cookies, setCookie, removeCookie] = useCookies();
 
   const navigate = useNavigate();
 
@@ -31,6 +35,15 @@ const Pet = ({ photo, name, species, gender, animal }) => {
     navigate('/profile');
   };
 
+  const handleFavorite = () => {
+    const isFavorite = cookies[animal.id.toString()];
+    if (isFavorite) {
+      removeCookie(animal.id.toString());
+    } else {
+      setCookie(animal.id.toString(), true);
+    }
+  };
+
   return (
     <Card
       sx={{
@@ -43,10 +56,16 @@ const Pet = ({ photo, name, species, gender, animal }) => {
         },
       }}
     >
-      <CardMedia sx={{ height: 150 }} image={photo} title="lil cat" data-animal={JSON.stringify(animal)} style={{cursor: "pointer"}}
-      onClick={(evt) => {
-        handleCardClick(evt);
-      }}/>
+      <CardMedia
+        sx={{ height: 150 }}
+        image={photo}
+        title="lil cat"
+        data-animal={JSON.stringify(animal)}
+        style={{ cursor: 'pointer' }}
+        onClick={(evt) => {
+          handleCardClick(evt);
+        }}
+      />
 
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
@@ -56,7 +75,20 @@ const Pet = ({ photo, name, species, gender, animal }) => {
           {gender} {species}
         </Typography>
       </CardContent>
-      <CardActions>
+      <CardActions
+        sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+      >
+        <Tooltip title="Favorite">
+          {cookies[animal.id.toString()] ? (
+            <Button onClick={handleFavorite}>
+              <FavoriteOutlinedIcon />
+            </Button>
+          ) : (
+            <Button onClick={handleFavorite}>
+              <FavoriteBorderOutlinedIcon />
+            </Button>
+          )}
+        </Tooltip>
         <Tooltip title="More info">
           <Button>
             <InfoOutlinedIcon />
