@@ -129,14 +129,17 @@ const Game = () => {
   };
 
 
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 
   useEffect(() => {}, [firstCard, secondCard, turn]);
   useEffect(() => {
     // setPetCards([...petCards, petCardArray]);
     //setPetCards([...petCardArray, ...petCardArray])
   }, [])
-  
+
   useEffect(() => {
     const socket = io.connect('http://localhost:3000', {
       reconnectionDelay: 1000,
@@ -146,8 +149,8 @@ const Game = () => {
       agent: false,
       upgrade: false,
       rejectUnauthorized: false
-    }); 
-    // const socket = io(); 
+    });
+    // const socket = io();
 
     console.log('connecting to server soon...');
 
@@ -156,54 +159,55 @@ const Game = () => {
     socket.on('hello', () => {
       console.log('Connected to the server');
       //socket.emit("msg", 5, "4", { 7: Uint8Array.from([8]) });
- 
+
       // Emit a "ready" event to the server when the player is ready to start the game
       // socket.emit('ready');
 
       // // Handle the "player_ready" event received from the server
       // socket.on('player_ready', (data) => {
-      //   console.log('Player', data.player, 'is ready');
-      // });
+        //   console.log('Player', data.player, 'is ready');
+        // });
 
-      // // Example: Sending a "make_move" event to the server with move data
-      // const moveData = {move:'move-data-here'};
-      // socket.emit('make_move', moveData);
+        // // Example: Sending a "make_move" event to the server with move data
+        // const moveData = {move:'move-data-here'};
+        // socket.emit('make_move', moveData);
 
-      // // Handle the "move_made" event received from the server
-      // socket.on('move_made', (data) => {
-      //   console.log('Player', data.player, 'made a move:', data.move);
-      // });
-    });
+        // // Handle the "move_made" event received from the server
+        // socket.on('move_made', (data) => {
+          //   console.log('Player', data.player, 'made a move:', data.move);
+          // });
+        });
 
-    // socket.on('disconnect', () => {
-    //   console.log('Disconnected from the server');
-    // });
+        // socket.on('disconnect', () => {
+          //   console.log('Disconnected from the server');
+          // });
 
-    // Clean up the socket connection when the component is unmounted
-    return () => {
-      socket.disconnect();
-    };
-  }, []);
+          // Clean up the socket connection when the component is unmounted
+          return () => {
+            socket.disconnect();
+          };
+        }, []);
 
   if (loading) {
     return <div>Loading...</div>
   }
   return (
     <div>
+
       {!gameFinshed ?
       <div>
         <h1 className="text-3xl font-bold underline m-1/2">Flip and match!</h1>
         <div className="flex flex-row gap-15 flex-wrap">
           {petCards.map((petCard, i) => (
             <GameCard
-              key={i}
-              pet={petCard}
-              setFlipped={setFlipped}
-              setTurn={setTurn}
-              turn={turn}
-              waiting={waiting}
-              setFirstCard={setFirstCard}
-              setSecondCard={setSecondCard}
+            key={i}
+            pet={petCard}
+            setFlipped={setFlipped}
+            setTurn={setTurn}
+            turn={turn}
+            waiting={waiting}
+            setFirstCard={setFirstCard}
+            setSecondCard={setSecondCard}
               matches={matches}
             />
           ))}
