@@ -37,7 +37,7 @@ const rooms = new Map();
 
 io.on('connection', (socket) => {
   console.log('New player connected:', socket.id);
-  console.log('connected');
+  console.log('rooms: ', rooms);
   
   // socket.emit('helooooo', 1, '2', { 3: Buffer.from([4])});
 
