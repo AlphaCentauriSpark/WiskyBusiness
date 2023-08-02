@@ -6,6 +6,16 @@ import GameFinished from './GameFinished.jsx';
 
 import io from 'socket.io-client';
 
+const socket = io.connect('http://localhost:3000', {
+  reconnectionDelay: 1000,
+  reconnection: true,
+  reconnectionAttemps: 10,
+  transports: ['websocket'],
+  agent: false,
+  upgrade: false,
+  rejectUnauthorized: false
+});
+
 const Game = () => {
   //TODO add styling:
   // when you try to click the back of a card, it shakes
@@ -71,6 +81,9 @@ const Game = () => {
   }, []);
 
   const setFlipped = (petId, index) => {
+    const moveData = { move: 'move-data-here' };
+    socket.emit('make_move', moveData);
+    
     setPetCards((pets) => {
       return pets.map((pet) => {
         if (petId === pet.id && index === pet.index) {
@@ -79,7 +92,8 @@ const Game = () => {
         return pet;
       });
     });
-
+    
+    
     if (turn === 0) {
       setFirstCard(petId);
       setTurn(1);
@@ -135,58 +149,56 @@ const Game = () => {
   };
 
   useEffect(() => {}, [firstCard, secondCard, turn]);
-  useEffect(() => {
-    // setPetCards([...petCards, petCardArray]);
-    //setPetCards([...petCardArray, ...petCardArray])
-  }, []);
-
 
   useEffect(() => {
-    const socket = io.connect('http://localhost:3000', {
-      reconnectionDelay: 1000,
-      reconnection: true,
-      reconnectionAttemps: 10,
-      transports: ['websocket'],
-      agent: false,
-      upgrade: false,
-      rejectUnauthorized: false,
-    });
-    // const socket = io();
+    
+    // setSocket(io.connect('http://localhost:3000', {
+    //   reconnectionDelay: 1000,
+    //   reconnection: true,
+    //   reconnectionAttemps: 10,
+    //   transports: ['websocket'],
+    //   agent: false,
+    //   upgrade: false,
+    //   rejectUnauthorized: false
+    // })); 
+    // const socket = io(); 
 
-    console.log('connecting to server soon...');
 
-    socket.emit('msg', 5, '4', { 7: Uint8Array.from([8]) });
+    // console.log('connecting to server soon...');
 
-    socket.on('hello', () => {
+    // socket.emit("msg", 5, "4", { 7: Uint8Array.from([8]) });
+
+
+    socket.on('connect', () => {
       console.log('Connected to the server');
       //socket.emit("msg", 5, "4", { 7: Uint8Array.from([8]) });
 
       // Emit a "ready" event to the server when the player is ready to start the game
-      // socket.emit('ready');
+      socket.emit('ready');
 
       // // Handle the "player_ready" event received from the server
-      // socket.on('player_ready', (data) => {
-      //   console.log('Player', data.player, 'is ready');
-      // });
+      socket.on('player_ready', (data) => {
+        console.log('Player', data.player, 'is ready');
+      }); 
 
       // // Example: Sending a "make_move" event to the server with move data
-      // const moveData = {move:'move-data-here'};
+      // const moveData = {move: 'move-data-here'};
       // socket.emit('make_move', moveData);
 
       // // Handle the "move_made" event received from the server
-      // socket.on('move_made', (data) => {
-      //   console.log('Player', data.player, 'made a move:', data.move);
-      // });
+      socket.on('move_made', (data) => {
+        console.log('Player', data.player, 'made a move:', data.move);
+      });
     });
 
-    // socket.on('disconnect', () => {
-    //   console.log('Disconnected from the server');
-    // });
+    socket.on('disconnect', () => {
+      console.log('Disconnected from the server');
+    });
 
     // Clean up the socket connection when the component is unmounted
-    return () => {
-      socket.disconnect();
-    };
+    // return () => {
+    //   socket.disconnect();
+    // };
   }, []);
 
   if (loading) {

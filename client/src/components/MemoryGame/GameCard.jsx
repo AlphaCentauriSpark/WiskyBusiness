@@ -9,11 +9,8 @@ import LocalLibraryIcon from "@mui/icons-material/LocalLibrary";
 import ShareIcon from "@mui/icons-material/Share";
 import AutorenewIcon from "@mui/icons-material/Autorenew";
 
-const GameCard = ({
-  pet,
-  setFlipped,
-  waiting,
-}) => {
+const GameCard = ({ pet, setFlipped, waiting, }) => {
+
   const handleFlip = () => {
     if (!waiting) {
       setFlipped(pet.id, pet.index);
