@@ -8,13 +8,19 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Card from './Card.jsx';
 import { AnimalContext } from '../App';
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
+import { HomeContext } from '../App.jsx';
 
 const Catalog = () => {
   const [speciesFilter, setSpeciesFilter] = useState('all');
   const [sizeFilter, setSizeFilter] = useState('all');
   const [genderFilter, setGenderFilter] = useState('all');
   const animals = useContext(AnimalContext);
+  const setHomeStatus = useContext(HomeContext);
+
+  useEffect(() => {
+    setHomeStatus(false);
+  }, []);
 
   return (
     <Stack
@@ -23,7 +29,9 @@ const Catalog = () => {
         justifyContent: 'center',
         paddingTop: '20px',
         alignItems: 'center',
-        m: 3,
+        marginLeft: 10,
+        marginRight: 10,
+        gap: 5,
       }}
     >
       <Box sx={{ paddingBottom: '20px' }}>

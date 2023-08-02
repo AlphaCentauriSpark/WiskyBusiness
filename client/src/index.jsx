@@ -18,7 +18,6 @@ import Welcome from './components/Welcome';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" loader={petsLoader} id="root" element={<App />}>
-
       <Route index path="/" element={<Welcome />}></Route>
       <Route path="home" element={<Game />}></Route>
       <Route path="catalog" element={<Catalog />}></Route>
