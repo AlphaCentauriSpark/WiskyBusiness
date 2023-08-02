@@ -32,7 +32,8 @@ const Pet = ({ photo, name, species, gender, animal }) => {
       lsNew.push(JSON.parse(evt.currentTarget.getAttribute('data-animal')).id);
       localStorage.setItem('viewedPets', JSON.stringify(lsNew));
     }
-    navigate('/profile');
+    console.log(JSON.parse(evt.currentTarget.getAttribute('data-animal')).id)
+    navigate('/profile/' + JSON.parse(evt.currentTarget.getAttribute('data-animal')).id);
   };
 
   const handleFavorite = () => {
