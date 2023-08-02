@@ -19,7 +19,6 @@ const Pet = ({ photo, name, species, gender, animal }) => {
   const navigate = useNavigate();
 
   const handleCardClick = (evt) => {
-    console.log('animal: ', animal)
     setCurrentPet(JSON.parse(evt.currentTarget.getAttribute("data-animal")))
     navigate("/profile")
   }
