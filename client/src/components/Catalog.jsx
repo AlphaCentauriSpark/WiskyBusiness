@@ -16,11 +16,11 @@ const Catalog = () => {
   const [sizeFilter, setSizeFilter] = useState('all');
   const [genderFilter, setGenderFilter] = useState('all');
   const animals = useContext(AnimalContext);
-  const setHomeStatus = useContext(HomeContext)
+  const setHomeStatus = useContext(HomeContext);
 
   useEffect(() => {
     setHomeStatus(false);
-  }, [])
+  }, []);
 
   return (
     <Stack
@@ -29,7 +29,9 @@ const Catalog = () => {
         justifyContent: 'center',
         paddingTop: '20px',
         alignItems: 'center',
-        m: 3,
+        marginLeft: 10,
+        marginRight: 10,
+        gap: 5,
       }}
     >
       <Box sx={{ paddingBottom: '20px' }}>

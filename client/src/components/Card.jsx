@@ -68,7 +68,7 @@ const Pet = ({ photo, name, species, gender, animal }) => {
       />
 
       <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
+        <Typography gutterBottom variant="h5" component="div" id="cardText">
           {name}
         </Typography>
         <Typography variant="body2" color="text.secondary">
