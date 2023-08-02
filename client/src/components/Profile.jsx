@@ -8,15 +8,15 @@ const Profile = () => {
 
   let { id } = useParams();
 
-  console.log(id)
-
   let alreadySaved = false;
   let localStore = JSON.parse(localStorage.getItem('savedPets'));
-  localStore.map((element) => {
-    if (element.id.toString() === id) {
-      alreadySaved = true;
-    }
-  });
+  if (localStore !== null) {
+    localStore.map((element) => {
+      if (element.id.toString() === id) {
+        alreadySaved = true;
+      }
+    });
+  }
 
   const currentPet = useContext(PetContext)[0];
   const viewedPets = JSON.parse(localStorage.getItem('viewedPets'));
