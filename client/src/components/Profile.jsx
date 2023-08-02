@@ -22,7 +22,7 @@ const Profile = () => {
       ? <h2>This is your first click on me.  We should meet some time.</h2>
       : <h2> You have viewed me {views} times!!! So...your place or mine?  Better make it mine....</h2>
       }
-      <div className='flex-auto'>
+      <div className='flex-auto m-8'>
         <img src={currentPet.primary_photo_cropped.small}></img>
         <div>Name:  {currentPet.name}</div>
         <div>Gender: {currentPet.gender}</div>
