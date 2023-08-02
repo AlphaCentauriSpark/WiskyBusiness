@@ -129,9 +129,7 @@ const Game = () => {
   };
 
 
-  if (loading) {
-    return <div>Loading...</div>
-  }
+
 
   useEffect(() => {}, [firstCard, secondCard, turn]);
   useEffect(() => {
@@ -187,7 +185,9 @@ const Game = () => {
     };
   }, []);
 
-
+  if (loading) {
+    return <div>Loading...</div>
+  }
   return (
     <div>
       {!gameFinshed ?
