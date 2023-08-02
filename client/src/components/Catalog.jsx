@@ -1,6 +1,7 @@
 import axios from 'axios';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
@@ -22,8 +23,16 @@ const Catalog = () => {
   }, [])
 
   return (
-    <>
-      <Box>
+    <Stack
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        paddingTop: '20px',
+        alignItems: 'center',
+        m: 3,
+      }}
+    >
+      <Box sx={{ paddingBottom: '20px' }}>
         <FormControl variant="outlined" sx={{ minWidth: 120 }}>
           <InputLabel id="Species Filter">Species</InputLabel>
           <Select
@@ -92,7 +101,7 @@ const Catalog = () => {
             }
           })}
       </Grid>
-    </>
+    </Stack>
   );
 };
 
