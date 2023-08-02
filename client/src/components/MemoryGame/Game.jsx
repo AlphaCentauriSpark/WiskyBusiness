@@ -140,6 +140,7 @@ const Game = () => {
     //setPetCards([...petCardArray, ...petCardArray])
   }, []);
 
+
   useEffect(() => {
     const socket = io.connect('http://localhost:3000', {
       reconnectionDelay: 1000,
@@ -191,6 +192,7 @@ const Game = () => {
   if (loading) {
     return <div>Loading...</div>;
   }
+  
   return (
     <div className="flex items-center justify-center">
       {!gameFinshed ? (
