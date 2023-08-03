@@ -10,11 +10,13 @@ import Card from './Card.jsx';
 import { AnimalContext } from '../App';
 import { useContext, useState, useEffect } from 'react';
 import { HomeContext } from '../App.jsx';
+import { useCookies } from 'react-cookie';
 
 const Catalog = () => {
   const [speciesFilter, setSpeciesFilter] = useState('all');
   const [sizeFilter, setSizeFilter] = useState('all');
   const [genderFilter, setGenderFilter] = useState('all');
+  const [cookies, setCookie, removeCookie] = useCookies();
   const animals = useContext(AnimalContext);
   const setHomeStatus = useContext(HomeContext);
 
