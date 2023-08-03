@@ -12,7 +12,11 @@ export default {
         'switzer-bold': ['Switzer-bold', 'mono'],
         'switzer-black': ['Switzer-black', 'mono'],
         'switzer-light': ['Switzer-light', 'mono'],
-        'comico-regular': ['Comico-Regular', 'mono']
+        'comico-regular': ['Comico-Regular', 'mono'],
+        'quicksand-regular': ['Quicksand-Regular', 'mono'],
+        'quicksand-bold': ['Quicksand-Bold', 'mono'],
+        'quicksand-semibold': ['Quicksand-SemiBold', 'mono'],
+        'quicksand-medium': ['Quicksand-Medium', 'mono']
       },
       textShadow: {
         default: '0 2px 5px rgba(0, 0, 0, 0.5)',
@@ -23,8 +27,8 @@ export default {
         "medium-pink": "#880031",
         "light-purple": "#CDB4DB",
         "light-pink": "#FFC8DD",
-        "light-blue": "BDE0FE",
-        "dark-blue": "A2D2FF"
+        "light-blue": "#BDE0FE",
+        "dark-blue": "#A2D2FF"
       },
       backgroundColor: {
         'custom-gray': '#dfdfdf',
@@ -45,5 +49,6 @@ export default {
   },
   plugins: [
     require('tailwindcss-textshadow'),
+    require("daisyui")
   ],
 }

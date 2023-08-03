@@ -20,12 +20,11 @@ const socket = io.connect('http://localhost:3000', {
 
 const Game = () => {
   //TODO add styling:
-  // when you try to click the back of a card, it shakes
   // when there's a match, ding sound & cards size increases temporarily
-  // add padding to each card
   // flip animation if no match
   // ability to turn sound on/off
-  // add cat img to front of card: https://media.istockphoto.com/id/1303646726/vector/doodle-cat-mustache-icon-isolated-on-white-outline-hand-drawing-art-line-sketch-logo-animal.jpg?s=612x612&w=0&k=20&c=41W_rC17pyfN_xNxxNIDL1BBTWXFLqtIYf9LL6z1qPk=
+
+  console.log('TESTTESTTESTTESTTESTTESTTEST')
 
   const [firstCard, setFirstCard] = useState('');
   const [secondCard, setSecondCard] = useState('');
@@ -43,8 +42,11 @@ const Game = () => {
 
   const setHomeStatus = useContext(HomeContext)
 
+<<<<<<< Updated upstream
   const [cookies, setCookie, removeCookie] = useCookies();
 
+=======
+>>>>>>> Stashed changes
   // Filter petsArr to only pets with images
   let petsArr = petsData.data.animals.sort(() => Math.random() - 0.5);
 
@@ -56,23 +58,32 @@ const Game = () => {
       const petDetails = {
         id: petCard.id,
         index: index,
-        name: petCard.name,
+        name: petCard.name.split(' ')[0],
+        age: petCard.age,
+        gender: petCard.gender,
+        breed: petCard.breeds.primary,
         isMatched: false,
         isFlipped: false,
         photo: petCard["primary_photo_cropped"].small
       }
+      console.log('pet details inside: ', petDetails)
       return petDetails;
   });
+
+
 
   let secondPetCards = allPets.map((petCard, index) => {
     const petDetails = {
       id: petCard.id,
       index: index + 6,
       name: petCard.name,
+      age: petCard.age,
+      gender: petCard.gender,
+      breed: petCard.breeds.primary,
       isMatched: false,
       isFlipped: false,
       photo: petCard["primary_photo_cropped"].small
-    };
+    }
     return petDetails;
   });
 
@@ -81,7 +92,11 @@ const Game = () => {
     ...secondPetCards,
   ]);
 
+<<<<<<< Updated upstream
   // console.log('these are the final pet cards: ', petCards)
+=======
+  console.log('these are the final pet cards!!!: ', secondPetCards)
+>>>>>>> Stashed changes
 
   useEffect(() => {
     setHomeStatus(true);
@@ -124,7 +139,6 @@ const Game = () => {
     if (firstCard && secondCard) {
       if (firstCard === secondCard) {
         setMatchCount((matchCount) => (matchCount += 2));
-        console.log('matchcount: ', matchCount);
         setPetCards((currPetCards) => {
           return currPetCards.map((currPetCard) => {
             if (currPetCard.id === firstCard) {
@@ -218,6 +232,8 @@ const Game = () => {
     return <div>Loading...</div>;
   }
 
+  console.log('test in main')
+
   return (
     <div className="flex items-center justify-center ">
       {!gameFinished && !waitingForOpp ? (
@@ -225,6 +241,7 @@ const Game = () => {
           <h1 className="text-4xl font-bold font-comico-regular mb-10 ml-5 text-medium-pink text-shadow-xl">
             Flip and match! ({playerId} Versus {oppId})
           </h1>
+          <p>Flip count: {matches.length}</p>c
           <div className="grid grid-cols-6 gap-6 w-4/5 justify-center">
             {petCards.map((petCard, i) => (
               <GameCard
