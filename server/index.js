@@ -32,7 +32,11 @@ const { Server } = socketIO;
 //     origin: 'http://127.0.0.1:5173/home' // Set this to the specific origin of your React app, e.g., 'http://localhost:3000'
 //   }
 // });
-const io = new Server(server);
+const io = new Server(server, {
+  cors: {
+    origin: ['http://localhost:5173','https://admin.socket.io/']
+  }
+});
 SocketControllers(io);
 
 //const rooms = new Map();

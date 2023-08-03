@@ -75,11 +75,11 @@ const App = () => {
 
               <Link className="rounded-full bg-pink-300 p-4 hover:bg-sky-300/80 transition-colors duration-150" to="/">Home</Link>
 
-              {isHome ?
+              {/* {isHome ?
                 <Link className="rounded-full bg-pink-300 p-4 hover:bg-sky-300/80 transition-colors duration-150 text-shadow-sm" to="/home">Join a Game!</Link>
                 :
                 <Link className="rounded-full bg-pink-300 p-4 hover:bg-sky-300/80 transition-colors duration-150 text-shadow-sm" to="/home">Play a game!</Link>
-            }
+            } */}
 
             </div>
             <p className="text-5xl font-bold font-comico-regular text-shadow-lg group hover:text-pink-200 transition-colors duration-150">Whisky <i className="fa-solid fa-paw text-neutral-50 text-shadow-lg"></i> Business</p>
