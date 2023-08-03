@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 // import { PetContext } from '../App';
 import { useParams } from 'react-router';
+import { useCookies } from 'react-cookie';
 
 
 
@@ -10,6 +11,9 @@ const Profile = () => {
   let { id } = useParams();
 
   const [currentPet, setCurrentPet] = useState(JSON.parse(localStorage.getItem('currentPet')))
+
+  const [cookies, setCookie, removeCookie] = useCookies();
+
   // const [alreadySaved, setAlreadySaved] = useState(false);
 
   // const currentPet = useContext(PetContext)[0];
@@ -74,9 +78,12 @@ const Profile = () => {
     // console.log('innerHTML: ', document.getElementById("favorite").innerHTML === "Add to Favorites");
     if (document.getElementById("favorite").innerHTML === "Add to Favorites") {
       document.getElementById("favorite").innerHTML = "Remove from Favorites"
+      setCookie(id.toString(), true)
     } else {
       document.getElementById("favorite").innerHTML = "Add to Favorites";
+      removeCookie(id.toString());
     }
+    console.log(document.cookie);
  }
 
   // useEffect(() => {
