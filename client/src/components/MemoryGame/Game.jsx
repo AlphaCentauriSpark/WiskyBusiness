@@ -15,7 +15,7 @@ const socket = io.connect('http://localhost:3000', {
   transports: ['websocket'],
   agent: false,
   upgrade: false,
-  rejectUnauthorized: false
+  rejectUnauthorized: false,
 });
 
 const Game = () => {
@@ -24,7 +24,7 @@ const Game = () => {
   // flip animation if no match
   // ability to turn sound on/off
 
-  console.log('TESTTESTTESTTESTTESTTESTTEST')
+  console.log('TESTTESTTESTTESTTESTTESTTEST');
 
   const [firstCard, setFirstCard] = useState('');
   const [secondCard, setSecondCard] = useState('');
@@ -35,42 +35,35 @@ const Game = () => {
   const [gameFinished, setGameFinished] = useState(false);
   const [matchCount, setMatchCount] = useState(0);
   const [loading, setLoading] = useState(true);
-
   const [waitingForOpp, setWaitingForOpp] = useState(true);
   const [playerId, setPlayerId] = useState('');
   const [oppId, setOppId] = useState('');
-
-  const setHomeStatus = useContext(HomeContext)
-
-<<<<<<< Updated upstream
   const [cookies, setCookie, removeCookie] = useCookies();
+  const setHomeStatus = useContext(HomeContext);
 
-=======
->>>>>>> Stashed changes
-  // Filter petsArr to only pets with images
   let petsArr = petsData.data.animals.sort(() => Math.random() - 0.5);
 
-  let allPets = petsArr.filter((pets) => {
-    return pets["primary_photo_cropped"] !== null
-  }).slice(0, 6)
+  let allPets = petsArr
+    .filter((pets) => {
+      return pets['primary_photo_cropped'] !== null;
+    })
+    .slice(0, 6);
 
   let firstPetCards = allPets.map((petCard, index) => {
-      const petDetails = {
-        id: petCard.id,
-        index: index,
-        name: petCard.name.split(' ')[0],
-        age: petCard.age,
-        gender: petCard.gender,
-        breed: petCard.breeds.primary,
-        isMatched: false,
-        isFlipped: false,
-        photo: petCard["primary_photo_cropped"].small
-      }
-      console.log('pet details inside: ', petDetails)
-      return petDetails;
+    const petDetails = {
+      id: petCard.id,
+      index: index,
+      name: petCard.name.split(' ')[0],
+      age: petCard.age,
+      gender: petCard.gender,
+      breed: petCard.breeds.primary,
+      isMatched: false,
+      isFlipped: false,
+      photo: petCard['primary_photo_cropped'].small,
+    };
+    console.log('pet details inside: ', petDetails);
+    return petDetails;
   });
-
-
 
   let secondPetCards = allPets.map((petCard, index) => {
     const petDetails = {
@@ -82,8 +75,8 @@ const Game = () => {
       breed: petCard.breeds.primary,
       isMatched: false,
       isFlipped: false,
-      photo: petCard["primary_photo_cropped"].small
-    }
+      photo: petCard['primary_photo_cropped'].small,
+    };
     return petDetails;
   });
 
@@ -92,11 +85,7 @@ const Game = () => {
     ...secondPetCards,
   ]);
 
-<<<<<<< Updated upstream
-  // console.log('these are the final pet cards: ', petCards)
-=======
-  console.log('these are the final pet cards!!!: ', secondPetCards)
->>>>>>> Stashed changes
+  console.log('these are the final pet cards!!!: ', secondPetCards);
 
   useEffect(() => {
     setHomeStatus(true);
@@ -118,7 +107,6 @@ const Game = () => {
         return pet;
       });
     });
-
 
     if (turn === 0) {
       setFirstCard(petId);
@@ -181,20 +169,20 @@ const Game = () => {
       console.log('Connected to the server');
 
       // Emit a "ready" event to the server when the player is ready to start the game
-      socket.emit('ready', socketId => {
+      socket.emit('ready', (socketId) => {
         console.log('socketId: ', socketId);
       });
-      
+
       socket.on('id', (id) => {
         console.log('your id is: ', id);
         setPlayerId(id);
-      })
+      });
 
       // // // Handle the "player_ready" event received from the server
       // socket.on('player_ready', (data) => {
       //   console.log('Player', data.player, 'is ready');
       // });
-      
+
       // // Handle the "player_ready" event received from the server
       socket.on('players_ready', (room) => {
         console.log('Room: ', room);
@@ -232,7 +220,7 @@ const Game = () => {
     return <div>Loading...</div>;
   }
 
-  console.log('test in main')
+  console.log('test in main');
 
   return (
     <div className="flex items-center justify-center ">
@@ -260,7 +248,12 @@ const Game = () => {
         </div>
       ) : gameFinished ? (
         <GameFinished />
-      ) : (<div>Waiting for Opponent...<button onClick={() => setWaitingForOpp(false)}>Start</button></div>)}
+      ) : (
+        <div>
+          Waiting for Opponent...
+          <button onClick={() => setWaitingForOpp(false)}>Start</button>
+        </div>
+      )}
     </div>
   );
 };

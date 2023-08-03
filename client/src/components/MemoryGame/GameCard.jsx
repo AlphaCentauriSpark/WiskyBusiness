@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 const GameCard = ({ pet, setFlipped, waiting }) => {
   const [effect, setEffect] = useState(false);
@@ -6,7 +6,7 @@ const GameCard = ({ pet, setFlipped, waiting }) => {
   const handleFlip = () => {
     if (!waiting) {
       setFlipped(pet.id, pet.index);
-      const audio = new Audio("../../public/flipcard-91468.mp3");
+      const audio = new Audio('../../public/flipcard-91468.mp3');
       audio.play();
     } else {
       return;
@@ -15,13 +15,7 @@ const GameCard = ({ pet, setFlipped, waiting }) => {
 
   const handleClick = () => {
     setEffect(true);
-<<<<<<< Updated upstream
-  }
-
-  //console.log(pet)
-=======
   };
->>>>>>> Stashed changes
 
   return (
     <div>
@@ -29,7 +23,7 @@ const GameCard = ({ pet, setFlipped, waiting }) => {
         <button
           onClick={handleClick}
           className={`${
-            effect && "animate-wiggle"
+            effect && 'animate-wiggle'
           } flex flex-col h-72 w-48 rounded-3xl`}
           onAnimationEnd={() => setEffect(false)}
         >
@@ -43,7 +37,7 @@ const GameCard = ({ pet, setFlipped, waiting }) => {
                 className="tooltip tooltip-right text-xl font-quicksand-bold text-shadow-md hover:text-sky-300 rounded-full w-auto px-3 text-center transition-colors duration-100 hover:underline"
                 data-tip="View Pet Profile"
               >
-                {pet.name.split(" ")[0]}
+                {pet.name.split(' ')[0]}
               </button>
               <div className="text-sm font-quicksand-medium">{pet.breed}</div>
               <div className="text-sm font-quicksand-medium">
