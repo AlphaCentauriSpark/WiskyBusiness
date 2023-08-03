@@ -81,7 +81,7 @@ const Game = () => {
   }, []);
 
   const setFlipped = (petId, index) => {
-    const moveData = { move: 'move-data-here' };
+    const moveData = { cardFlipped: index };
     socket.emit('make_move', moveData);
     
     setPetCards((pets) => {
@@ -196,9 +196,9 @@ const Game = () => {
     });
 
     // Clean up the socket connection when the component is unmounted
-    // return () => {
-    //   socket.disconnect();
-    // };
+    return () => {
+      socket.disconnect();
+    };
   }, []);
 
   if (loading) {

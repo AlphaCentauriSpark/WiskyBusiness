@@ -40,14 +40,6 @@ SocketControllers(io);
 // io.on('connection', (socket) => {
 //   console.log('New player connected:', socket.id);
 //   console.log('rooms: ', rooms);
-  
-//   // socket.emit('helooooo', 1, '2', { 3: Buffer.from([4])});
-
-//   // socket.on('msg', (data) => {
-//   //   console.log('message!!')
-//   //   io.sockets.emit('hello', data);
-//   // })
-
 //   //Matchmaking and room creation logic
 //   let room;
 //   if (!room) {
