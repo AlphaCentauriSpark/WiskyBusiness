@@ -32,7 +32,7 @@ const Pet = ({ photo, name, species, gender, animal }) => {
       lsNew.push(JSON.parse(evt.currentTarget.getAttribute('data-animal')).id);
       localStorage.setItem('viewedPets', JSON.stringify(lsNew));
     }
-    console.log(JSON.parse(evt.currentTarget.getAttribute('data-animal')).id)
+    localStorage.setItem('currentPet', JSON.stringify(animal));
     navigate('/profile/' + JSON.parse(evt.currentTarget.getAttribute('data-animal')).id);
   };
 
@@ -63,8 +63,8 @@ const Pet = ({ photo, name, species, gender, animal }) => {
         title="lil cat"
         data-animal={JSON.stringify(animal)}
         style={{ cursor: 'pointer' }}
-        onClick={(evt) => {
-          handleCardClick(evt);
+      onClick={(evt) => {
+        handleCardClick(evt);
         }}
       />
 
