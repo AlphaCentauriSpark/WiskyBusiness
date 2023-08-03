@@ -32,26 +32,34 @@ const SoloGame = () => {
   }).slice(0, 6)
 
   let firstPetCards = allPets.map((petCard, index) => {
-      const petDetails = {
-        id: petCard.id,
-        index: index,
-        name: petCard.name,
-        isMatched: false,
-        isFlipped: false,
-        photo: petCard["primary_photo_cropped"].small
-      }
-      return petDetails;
-  });
+    const petDetails = {
+      id: petCard.id,
+      index: index,
+      name: petCard.name,
+      age: petCard.age,
+      gender: petCard.gender,
+      breed: petCard.breeds.primary,
+      isMatched: false,
+      isFlipped: false,
+      photo: petCard["primary_photo_cropped"].small
+    }
+    console.log('pet details inside: ', petDetails)
+    return petDetails;
+});
 
   let secondPetCards = allPets.map((petCard, index) => {
     const petDetails = {
       id: petCard.id,
       index: index + 6,
       name: petCard.name,
+      age: petCard.age,
+      gender: petCard.gender,
+      breed: petCard.breeds.primary,
       isMatched: false,
       isFlipped: false,
       photo: petCard["primary_photo_cropped"].small
-    };
+    }
+    console.log('pet details inside: ', petDetails)
     return petDetails;
   });
 
@@ -70,7 +78,7 @@ const SoloGame = () => {
   }, []);
 
   const setFlipped = (petId, index) => {
-    
+
     setPetCards((pets) => {
       return pets.map((pet) => {
         if (petId === pet.id && index === pet.index) {
@@ -79,8 +87,8 @@ const SoloGame = () => {
         return pet;
       });
     });
-    
-    
+
+
     if (turn === 0) {
       setFirstCard(petId);
       setTurn(1);
@@ -140,7 +148,7 @@ const SoloGame = () => {
   if (loading) {
     return <div>Loading...</div>;
   }
-  
+
   return (
     <div className="flex items-center justify-center">
       {!gameFinshed ? (
