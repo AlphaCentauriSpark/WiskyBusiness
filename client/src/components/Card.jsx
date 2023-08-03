@@ -34,7 +34,9 @@ const Pet = ({ photo, name, species, gender, animal }) => {
       localStorage.setItem('viewedPets', JSON.stringify(lsNew));
     }
     localStorage.setItem('currentPet', JSON.stringify(animal));
-    navigate('/profile/' + JSON.parse(evt.currentTarget.getAttribute('data-animal')).id);
+    navigate(
+      '/profile/' + JSON.parse(evt.currentTarget.getAttribute('data-animal')).id
+    );
   };
 
   const handleFavorite = (evt) => {
@@ -51,12 +53,11 @@ const Pet = ({ photo, name, species, gender, animal }) => {
           if (element.id.toString() === id) {
             location = index;
           }
-        })
-      localStore.splice(location, 1);
-      localStorage.setItem('savedPets', JSON.stringify(localStore));
-      console.log('removed from favorites')
-    }
-
+        });
+        localStore.splice(location, 1);
+        localStorage.setItem('savedPets', JSON.stringify(localStore));
+        console.log('removed from favorites');
+      }
     } else {
       setCookie(animal.id.toString(), true);
 
@@ -75,9 +76,11 @@ const Pet = ({ photo, name, species, gender, animal }) => {
             alreadySaved = true;
             location = index;
           }
-        })
+        });
         if (alreadySaved === false) {
-          localStore.push(JSON.parse(evt.currentTarget.getAttribute('data-animal')));
+          localStore.push(
+            JSON.parse(evt.currentTarget.getAttribute('data-animal'))
+          );
           localStorage.setItem('savedPets', JSON.stringify(localStore));
         }
         console.log('saved to favorites');
@@ -85,10 +88,18 @@ const Pet = ({ photo, name, species, gender, animal }) => {
     }
   };
 
+  const handleShareClick = () => {
+    console.log(animal);
+    const link = `https://www.facebook.com/sharer/sharer.php?u=https://127.0.0.1:5173/profile/${animal.id}&quote=Available%20%20for%20adoption!`;
+
+    window.open(link, '_blank');
+  };
+
   return (
     <Card
       sx={{
-        maxWidth: 200,
+        width: '90%',
+        height: 300,
         borderRadius: '15px',
         backgroundColor: '#fae8ff',
         transition: 'box-shadow 0.1s ease',
@@ -103,13 +114,13 @@ const Pet = ({ photo, name, species, gender, animal }) => {
         title="lil cat"
         data-animal={JSON.stringify(animal)}
         style={{ cursor: 'pointer' }}
-      onClick={(evt) => {
-        handleCardClick(evt);
+        onClick={(evt) => {
+          handleCardClick(evt);
         }}
       />
 
       <CardContent>
-        <Typography gutterBottom variant="h5" component="div" id="cardText">
+        <Typography gutterBottom variant="h6" component="div" id="cardText">
           {name}
         </Typography>
         <Typography variant="body2" color="text.secondary">
@@ -121,22 +132,25 @@ const Pet = ({ photo, name, species, gender, animal }) => {
       >
         <Tooltip title="Favorite">
           {cookies[animal.id.toString()] ? (
-            <Button onClick={handleFavorite} data-animal={JSON.stringify(animal)} data-id={animal.id.toString()}>
+            <Button
+              onClick={handleFavorite}
+              data-animal={JSON.stringify(animal)}
+              data-id={animal.id.toString()}
+            >
               <FavoriteOutlinedIcon />
             </Button>
           ) : (
-            <Button onClick={handleFavorite} data-animal={JSON.stringify(animal)} data-id={animal.id.toString()}>
+            <Button
+              onClick={handleFavorite}
+              data-animal={JSON.stringify(animal)}
+              data-id={animal.id.toString()}
+            >
               <FavoriteBorderOutlinedIcon />
             </Button>
           )}
         </Tooltip>
-        <Tooltip title="More info">
-          <Button>
-            <InfoOutlinedIcon />
-          </Button>
-        </Tooltip>
         <Tooltip title="Share">
-          <Button>
+          <Button onClick={handleShareClick}>
             <IosShareOutlinedIcon />
           </Button>
         </Tooltip>

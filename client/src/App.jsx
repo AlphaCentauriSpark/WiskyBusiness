@@ -52,7 +52,6 @@ const App = () => {
             })
             .then((response) => {
               setAnimals(response.data);
-              console.log(response.data);
             })
             .catch((error) => {
               console.log(error);
