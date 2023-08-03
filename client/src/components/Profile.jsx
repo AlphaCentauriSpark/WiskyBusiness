@@ -1,5 +1,6 @@
-import { useContext, useState } from 'react';
-import { PetContext } from '../App';
+// import { useContext } from 'react';
+import { useState, useEffect } from 'react';
+// import { PetContext } from '../App';
 import { useParams } from 'react-router';
 
 
@@ -9,6 +10,7 @@ const Profile = () => {
   let { id } = useParams();
 
   const [currentPet, setCurrentPet] = useState(JSON.parse(localStorage.getItem('currentPet')))
+  // const [alreadySaved, setAlreadySaved] = useState(false);
 
   // const currentPet = useContext(PetContext)[0];
   // const setCurrentPet = useContext(PetContext)[1];
@@ -38,26 +40,47 @@ const Profile = () => {
     return accum
   }, 0)
 
-  const handleSaveClick = (evt) => {
+  const handleClick = (evt) => {
     if (localStorage.getItem('savedPets') === null) {
       let arr = [];
       arr.push(JSON.parse(evt.currentTarget.getAttribute('data-animal')));
+      // saving first pet when no other favorites have been made
       localStorage.setItem('savedPets', JSON.stringify(arr));
+      // document.getElementById("fav").innerHTML="Remove from Favorites"
     } else {
       let alreadySaved = false;
       let localStore = JSON.parse(localStorage.getItem('savedPets'));
-      localStore.map((element) => {
+      let location = null;
+      localStore.map((element, index) => {
         if (element.id.toString() === id) {
           alreadySaved = true;
+          location = index;
         }
       })
       if (alreadySaved === false) {
+        //adding a favorite
         localStore.push(JSON.parse(evt.currentTarget.getAttribute('data-animal')));
         localStorage.setItem('savedPets', JSON.stringify(localStore));
+        // document.getElementById("fav").innerHTML="Add to Favorites"
+      } else {
+        //removing a favorite
+        localStore.splice(location, 1);
+        localStorage.setItem('savedPets', JSON.stringify(localStore));
+        alreadySaved = false;
+        // document.getElementById("fav").innerHTML="Remove from Favorites"
       }
     }
-    console.log(JSON.parse(localStorage.getItem('savedPets')));
-  }
+    // location.reload();
+    // console.log('innerHTML: ', document.getElementById("favorite").innerHTML === "Add to Favorites");
+    if (document.getElementById("favorite").innerHTML === "Add to Favorites") {
+      document.getElementById("favorite").innerHTML = "Remove from Favorites"
+    } else {
+      document.getElementById("favorite").innerHTML = "Add to Favorites";
+    }
+ }
+
+  // useEffect(() => {
+  // }, [alreadySaved])
 
   return (
     <div>
@@ -80,8 +103,8 @@ const Profile = () => {
           <div className="flex flex-row">
 
             {alreadySaved === false
-            ? <button className="rounded-full bg-pink-300 p-4 hover:bg-sky-300/80 transition-colors duration-150 w-48 mr-40" onClick={handleSaveClick} data-animal={JSON.stringify(currentPet)}>Add to Favorites</button>
-            :<button className="rounded-full bg-pink-300 p-4 hover:bg-sky-300/80 transition-colors duration-150 w-48 mr-40" data-animal={JSON.stringify(currentPet)}>Remove from Favorites</button>
+            ? <button id="favorite" className="rounded-full bg-pink-300 p-4 hover:bg-sky-300/80 transition-colors duration-150 w-52 mr-40" onClick={handleClick} data-animal={JSON.stringify(currentPet)}>Add to Favorites</button>
+            :<button id="favorite" className="rounded-full bg-pink-300 p-4 hover:bg-sky-300/80 transition-colors duration-150 w-52 mr-40" onClick={handleClick} data-animal={JSON.stringify(currentPet)}>Remove from Favorites</button>
             }
             <button className="rounded-full bg-pink-300 p-4 hover:bg-sky-300/80 transition-colors duration-150 w-52">See Your Favorite Pets</button>
           </div>

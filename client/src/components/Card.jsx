@@ -5,10 +5,11 @@ import Tooltip from '@mui/material/Tooltip';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import LocalLibraryIcon from '@mui/icons-material/LocalLibrary';
+// import LocalLibraryIcon from '@mui/icons-material/LocalLibrary';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import IosShareOutlinedIcon from '@mui/icons-material/IosShareOutlined';
-import { useContext, useState, useEffect } from 'react';
+import { useContext } from 'react';
+// import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PetContext } from '../App';
 import { useCookies } from 'react-cookie';
@@ -36,12 +37,51 @@ const Pet = ({ photo, name, species, gender, animal }) => {
     navigate('/profile/' + JSON.parse(evt.currentTarget.getAttribute('data-animal')).id);
   };
 
-  const handleFavorite = () => {
+  const handleFavorite = (evt) => {
     const isFavorite = cookies[animal.id.toString()];
     if (isFavorite) {
       removeCookie(animal.id.toString());
+
+      // setting for removing a favorite
+      let localStore = JSON.parse(localStorage.getItem('savedPets'));
+      let id = JSON.parse(evt.currentTarget.getAttribute('data-id'));
+      let location = null;
+      if (localStore.length !== 0) {
+        localStore.map((element, index) => {
+          if (element.id.toString() === id) {
+            location = index;
+          }
+        })
+      localStore.splice(location, 1);
+      localStorage.setItem('savedPets', JSON.stringify(localStore));
+      console.log('removed from favorites')
+    }
+
     } else {
       setCookie(animal.id.toString(), true);
+
+      // setting for making a favorite
+      if (localStorage.getItem('savedPets') === null) {
+        let arr = [];
+        arr.push(JSON.parse(evt.currentTarget.getAttribute('data-animal')));
+        localStorage.setItem('savedPets', JSON.stringify(arr));
+      } else {
+        let alreadySaved = false;
+        let location = null;
+        let localStore = JSON.parse(localStorage.getItem('savedPets'));
+        let id = JSON.parse(evt.currentTarget.getAttribute('data-id'));
+        localStore.map((element, index) => {
+          if (element.id.toString() === id) {
+            alreadySaved = true;
+            location = index;
+          }
+        })
+        if (alreadySaved === false) {
+          localStore.push(JSON.parse(evt.currentTarget.getAttribute('data-animal')));
+          localStorage.setItem('savedPets', JSON.stringify(localStore));
+        }
+        console.log('saved to favorites');
+      }
     }
   };
 
@@ -81,11 +121,11 @@ const Pet = ({ photo, name, species, gender, animal }) => {
       >
         <Tooltip title="Favorite">
           {cookies[animal.id.toString()] ? (
-            <Button onClick={handleFavorite}>
+            <Button onClick={handleFavorite} data-animal={JSON.stringify(animal)} data-id={animal.id.toString()}>
               <FavoriteOutlinedIcon />
             </Button>
           ) : (
-            <Button onClick={handleFavorite}>
+            <Button onClick={handleFavorite} data-animal={JSON.stringify(animal)} data-id={animal.id.toString()}>
               <FavoriteBorderOutlinedIcon />
             </Button>
           )}
