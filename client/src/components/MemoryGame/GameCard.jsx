@@ -28,7 +28,7 @@ const GameCard = ({ pet, setFlipped, waiting, }) => {
     setEffect(true);
   }
 
-  console.log(pet)
+  //console.log(pet)
 
   return (
     <div>

@@ -2,7 +2,7 @@ import GameCard from './GameCard.jsx';
 import { useState, useEffect, useContext } from 'react';
 import { useRouteLoaderData } from 'react-router-dom';
 import { HomeContext } from '../../App.jsx';
-
+import { useCookies } from 'react-cookie';
 
 import GameFinished from './GameFinished.jsx';
 
@@ -38,9 +38,12 @@ const Game = () => {
   const [loading, setLoading] = useState(true);
 
   const [waitingForOpp, setWaitingForOpp] = useState(true);
+  const [playerId, setPlayerId] = useState('');
+  const [oppId, setOppId] = useState('');
 
   const setHomeStatus = useContext(HomeContext)
 
+  const [cookies, setCookie, removeCookie] = useCookies();
 
   // Filter petsArr to only pets with images
   let petsArr = petsData.data.animals.sort(() => Math.random() - 0.5);
@@ -78,7 +81,7 @@ const Game = () => {
     ...secondPetCards,
   ]);
 
-  console.log('these are the final pet cards: ', petCards)
+  // console.log('these are the final pet cards: ', petCards)
 
   useEffect(() => {
     setHomeStatus(true);
@@ -159,34 +162,36 @@ const Game = () => {
   useEffect(() => {}, [firstCard, secondCard, turn]);
 
   useEffect(() => {
-
-    // setSocket(io.connect('http://localhost:3000', {
-    //   reconnectionDelay: 1000,
-    //   reconnection: true,
-    //   reconnectionAttemps: 10,
-    //   transports: ['websocket'],
-    //   agent: false,
-    //   upgrade: false,
-    //   rejectUnauthorized: false
-    // }));
-    // const socket = io();
-
-
-    // console.log('connecting to server soon...');
-
-    // socket.emit("msg", 5, "4", { 7: Uint8Array.from([8]) });
-
-
+    console.log('name: ', cookies.user);
     socket.on('connect', () => {
       console.log('Connected to the server');
-      //socket.emit("msg", 5, "4", { 7: Uint8Array.from([8]) });
 
       // Emit a "ready" event to the server when the player is ready to start the game
-      socket.emit('ready');
+      socket.emit('ready', socketId => {
+        console.log('socketId: ', socketId);
+      });
+      
+      socket.on('id', (id) => {
+        console.log('your id is: ', id);
+        setPlayerId(id);
+      })
 
+      // // // Handle the "player_ready" event received from the server
+      // socket.on('player_ready', (data) => {
+      //   console.log('Player', data.player, 'is ready');
+      // });
+      
       // // Handle the "player_ready" event received from the server
-      socket.on('player_ready', (data) => {
-        console.log('Player', data.player, 'is ready');
+      socket.on('players_ready', (room) => {
+        console.log('Room: ', room);
+        let opp = '';
+        if (room.players[0] == playerId) {
+          opp = room.players[1];
+        } else {
+          opp = room.players[0];
+        }
+        setOppId(opp);
+        setWaitingForOpp(false);
       });
 
       // // Example: Sending a "make_move" event to the server with move data
@@ -214,11 +219,11 @@ const Game = () => {
   }
 
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex items-center justify-center ">
       {!gameFinished && !waitingForOpp ? (
         <div className="flex items-center flex-col justify-center gap-5 mt-14">
           <h1 className="text-4xl font-bold font-comico-regular mb-10 ml-5 text-medium-pink text-shadow-xl">
-            Flip and match! (Versus)
+            Flip and match! ({playerId} Versus {oppId})
           </h1>
           <div className="grid grid-cols-6 gap-6 w-4/5 justify-center">
             {petCards.map((petCard, i) => (

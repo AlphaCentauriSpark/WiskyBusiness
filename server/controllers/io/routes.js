@@ -10,6 +10,7 @@ module.exports = (socket, io, rooms) => {
   for (let i in rooms) {
     if (rooms[i].players.length < 2) {
       room = i;
+      break;
     }
   }
   
@@ -21,6 +22,7 @@ module.exports = (socket, io, rooms) => {
     rooms[room].players.push(socket.id);
     console.log(`joining room ${room}, room now has ${rooms[room].players.length} players in it`);
     socket.join(room);
+    io.to(room).emit('players_ready', rooms[room]);
   };
   
   console.log('rooms: ', rooms);
@@ -29,8 +31,12 @@ module.exports = (socket, io, rooms) => {
   io.to(room).emit('players_connected', { room });
 
   
-  socket.on('ready', (data) => {
-    test(data);
+  socket.on('ready', (cb) => {
+    // io.to(socket.id).emit('id', socket.id);
+    let socketId = socket.id;
+    cb(socket.io);
+    // io.to(socketId).emit('id', socket.id);
+    socket.emit('id', socket.id);
   });
   
   socket.on('make_move', (move) => {
