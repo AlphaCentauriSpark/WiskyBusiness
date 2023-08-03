@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { PetContext } from '../App';
 import { useParams } from 'react-router';
 
@@ -7,6 +7,11 @@ import { useParams } from 'react-router';
 const Profile = () => {
 
   let { id } = useParams();
+
+  const [currentPet, setCurrentPet] = useState(JSON.parse(localStorage.getItem('currentPet')))
+
+  // const currentPet = useContext(PetContext)[0];
+  // const setCurrentPet = useContext(PetContext)[1];
 
   let alreadySaved = false;
   let localStore = JSON.parse(localStorage.getItem('savedPets'));
@@ -18,7 +23,13 @@ const Profile = () => {
     });
   }
 
-  const currentPet = useContext(PetContext)[0];
+
+
+  // if (JSON.stringify(currentPet) === JSON.stringify({})) {
+  //   console.log('got here')
+  //   setCurrentPet(JSON.parse(localStorage.getItem('currentPet')));
+  // }
+
   const viewedPets = JSON.parse(localStorage.getItem('viewedPets'));
   const views = viewedPets.reduce((accum, element) => {
     if (currentPet.id === element) {
