@@ -111,3 +111,36 @@ module.exports.getOrganizations = (req, res) => {
       console.log(err);
     });
 };
+
+module.exports.getPet = (req, res) => {
+  axios.defaults.baseURL = 'https://api.petfinder.com/v2/';
+  axios({
+    method: 'post',
+    url: 'oauth2/token',
+    data: {
+      grant_type: 'client_credentials',
+      client_id: process.env.API_Key,
+      client_secret: process.env.Secret,
+    },
+  })
+    .then((tokenObj) => {
+      let token = tokenObj.data.token_type + ' ' + tokenObj.data.access_token;
+      let category = 'organizations/?limit=100';
+      axios({
+        method: 'get',
+        url: category,
+        headers: {
+          Authorization: token,
+        },
+      })
+        .then((response) => {
+          res.send(response.data.organizations);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};

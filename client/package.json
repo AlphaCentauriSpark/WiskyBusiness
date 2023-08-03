@@ -9,7 +9,7 @@
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "build:tailwind": "npx tailwindcss -i ./index.css -o ./dist/output.css",
-    "watch:tailwind": "npx tailwindcss -i ./index.css -o ./dist/output.css --watch",
+    "watch": "npx tailwindcss -i ./index.css -o ./dist/output.css --watch",
     "styles": "npx tailwindcss -i ./index.css -o ./dist/output.css --watch"
   },
   "dependencies": {
@@ -26,6 +26,7 @@
     "postcss": "^8.4.27",
     "react": "^18.2.0",
     "react-confetti": "^6.1.0",
+    "react-cookie": "^4.1.1",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.14.2",
     "socket.io-client": "^4.7.1",

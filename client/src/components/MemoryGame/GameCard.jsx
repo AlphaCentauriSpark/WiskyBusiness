@@ -8,8 +8,11 @@ import Typography from "@mui/material/Typography";
 import LocalLibraryIcon from "@mui/icons-material/LocalLibrary";
 import ShareIcon from "@mui/icons-material/Share";
 import AutorenewIcon from "@mui/icons-material/Autorenew";
+import { useState } from 'react'
 
 const GameCard = ({ pet, setFlipped, waiting, }) => {
+
+  const [effect, setEffect] = useState(false)
 
   const handleFlip = () => {
     if (!waiting) {
@@ -21,74 +24,25 @@ const GameCard = ({ pet, setFlipped, waiting, }) => {
     }
   };
 
+  const handleClick = () => {
+    setEffect(true);
+  }
+
   console.log(pet)
 
   return (
     <div>
       {pet.isFlipped || pet.isMatched ? (
-        <button className="flex flex-col h-64 w-48 rounded-3xl">
-          <img className="pet-image h-full w-auto border rounded-t-3xl object-cover" src={pet.photo}></img>
-          <div className="pet-info bg-white h-full w-full rounded-b-3xl font-comico-regular">{pet.name}</div>
+        <button onClick={handleClick} className={`${effect && "animate-wiggle"} flex flex-col h-64 w-48 rounded-3xl`} onAnimationEnd={() => setEffect(false)}>
+          <div className="pet-container h-48 w-full">
+            <img className="pet-image h-full w-full border rounded-t-3xl object-cover" src={pet.photo}></img>
+          </div>
+          <div className="pet-info bg-white h-24 w-full rounded-b-3xl font-comico-regular">{pet.name}</div>
         </button>
-        // <Card
-        //   className="flipped-card"
-        //   sx={{
-        //     maxWidth: 200,
-        //     borderRadius: "15px",
-        //     transition: "box-shadow 0.1s ease",
-        //     "&:hover": {
-        //       boxShadow: "0 10px 26px rgba(0, 0, 0, 0.1)",
-        //     },
-        //   }}
-        // >
-        //   <CardMedia
-        //     sx={{ height: 150 }}
-        //     image="https://cdn.pixabay.com/photo/2014/11/30/14/11/cat-551554_1280.jpg"
-        //     title="lil cat"
-        //   />
-
-        //   <CardContent>
-        //     <Typography gutterBottom variant="h5" component="div">
-        //       {pet.name}
-        //     </Typography>
-        //     <Typography variant="body2" color="text.secondary">
-        //       {pet.id}
-        //     </Typography>
-        //   </CardContent>
-        //   <CardActions>
-        //     <Tooltip title="More info">
-        //       <Button>
-        //         <LocalLibraryIcon />
-        //       </Button>
-        //     </Tooltip>
-        //     <Tooltip title="Share">
-        //       <Button>
-        //         <ShareIcon />
-        //       </Button>
-        //     </Tooltip>
-        //   </CardActions>
-        // </Card>
       ) : (
         <button className="h-64 w-48 mr-16 min-w bg-gradient-to-r from-light-purple to-light-pink rounded-3xl shadow-lg flex items-center justify-center text-7xl" onClick={handleFlip}>
           <i className="fa-solid fa-paw text-medium-pink text-shadow-lg"></i>
         </button>
-        // <Card
-        //   sx={{
-        //     maxWidth: 200,
-        //     borderRadius: "15px",
-        //     transition: "box-shadow 0.1s ease",
-        //     "&:hover": {
-        //       boxShadow: "0 10px 26px rgba(0, 0, 0, 0.1)",
-        //     },
-        //   }}
-        //   onClick={handleFlip}
-        // >
-        //   <CardMedia sx={{ height: 150, background: "#CDB4DB" }} />
-
-        //   <CardContent>
-        //     <i className="fa-solid fa-paw"></i>
-        //   </CardContent>
-        // </Card>
       )}
     </div>
   );

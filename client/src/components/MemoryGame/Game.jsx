@@ -1,6 +1,8 @@
 import GameCard from './GameCard.jsx';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useRouteLoaderData } from 'react-router-dom';
+import { HomeContext } from '../../App.jsx';
+
 
 import GameFinished from './GameFinished.jsx';
 
@@ -34,7 +36,11 @@ const Game = () => {
   const [gameFinished, setGameFinished] = useState(false);
   const [matchCount, setMatchCount] = useState(0);
   const [loading, setLoading] = useState(true);
+
   const [waitingForOpp, setWaitingForOpp] = useState(true);
+
+  const setHomeStatus = useContext(HomeContext)
+
 
   // Filter petsArr to only pets with images
   let petsArr = petsData.data.animals.sort(() => Math.random() - 0.5);
@@ -75,6 +81,7 @@ const Game = () => {
   console.log('these are the final pet cards: ', petCards)
 
   useEffect(() => {
+    setHomeStatus(true);
     setPetCards((unshuffledCards) => {
       return unshuffledCards.sort(() => Math.random() - 0.5);
     });
@@ -84,7 +91,7 @@ const Game = () => {
   const setFlipped = (petId, index) => {
     const moveData = { cardFlipped: index };
     socket.emit('make_move', moveData);
-    
+
     setPetCards((pets) => {
       return pets.map((pet) => {
         if (petId === pet.id && index === pet.index) {
@@ -93,8 +100,8 @@ const Game = () => {
         return pet;
       });
     });
-    
-    
+
+
     if (turn === 0) {
       setFirstCard(petId);
       setTurn(1);
@@ -152,7 +159,7 @@ const Game = () => {
   useEffect(() => {}, [firstCard, secondCard, turn]);
 
   useEffect(() => {
-    
+
     // setSocket(io.connect('http://localhost:3000', {
     //   reconnectionDelay: 1000,
     //   reconnection: true,
@@ -161,8 +168,8 @@ const Game = () => {
     //   agent: false,
     //   upgrade: false,
     //   rejectUnauthorized: false
-    // })); 
-    // const socket = io(); 
+    // }));
+    // const socket = io();
 
 
     // console.log('connecting to server soon...');
@@ -180,7 +187,7 @@ const Game = () => {
       // // Handle the "player_ready" event received from the server
       socket.on('player_ready', (data) => {
         console.log('Player', data.player, 'is ready');
-      }); 
+      });
 
       // // Example: Sending a "make_move" event to the server with move data
       // const moveData = {move: 'move-data-here'};
@@ -205,7 +212,7 @@ const Game = () => {
   if (loading) {
     return <div>Loading...</div>;
   }
-  
+
   return (
     <div className="flex items-center justify-center">
       {!gameFinished && !waitingForOpp ? (
