@@ -229,7 +229,6 @@ const Game = () => {
           <h1 className="text-4xl font-bold font-comico-regular mb-10 ml-5 text-medium-pink text-shadow-xl">
             Flip and match! ({playerId} Versus {oppId})
           </h1>
-          <p>Flip count: {matches.length}</p>c
           <div className="grid grid-cols-6 gap-6 w-4/5 justify-center">
             {petCards.map((petCard, i) => (
               <GameCard

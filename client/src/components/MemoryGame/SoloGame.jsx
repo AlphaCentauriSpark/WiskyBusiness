@@ -23,6 +23,9 @@ const SoloGame = () => {
   const [gameFinshed, setGameFinished] = useState(false);
   const [matchCount, setMatchCount] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [flipCount, setFlipCount] = useState(0);
+  const [soundUrl, setSoundUrl] = useState('/matchSound.mp3')
+  const sound = new Audio(soundUrl);
 
   // Filter petsArr to only pets with images
   let petsArr = petsData.data.animals.sort(() => Math.random() - 0.5);
@@ -59,7 +62,6 @@ const SoloGame = () => {
       isFlipped: false,
       photo: petCard["primary_photo_cropped"].small
     }
-    console.log('pet details inside: ', petDetails)
     return petDetails;
   });
 
@@ -67,8 +69,6 @@ const SoloGame = () => {
     ...firstPetCards,
     ...secondPetCards,
   ]);
-
-  console.log('these are the final pet cards: ', petCards)
 
   useEffect(() => {
     setPetCards((unshuffledCards) => {
@@ -107,8 +107,9 @@ const SoloGame = () => {
   useEffect(() => {
     if (firstCard && secondCard) {
       if (firstCard === secondCard) {
+        sound.play();
         setMatchCount((matchCount) => (matchCount += 2));
-        console.log('matchcount: ', matchCount);
+        setFlipCount(flipCount+1)
         setPetCards((currPetCards) => {
           return currPetCards.map((currPetCard) => {
             if (currPetCard.id === firstCard) {
@@ -156,6 +157,7 @@ const SoloGame = () => {
           <h1 className="text-4xl font-bold font-comico-regular mb-10 ml-5 text-medium-pink text-shadow-xl">
             Flip and match! (Solo)
           </h1>
+          <p className="text-medium-pink font-comico-regular">Match count: {flipCount}</p>
           <div className="grid grid-cols-6 gap-6 w-4/5 justify-center">
             {petCards.map((petCard, i) => (
               <GameCard
