@@ -6,13 +6,11 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const PORT = 3000;
-require('dotenv').config()
+require('dotenv').config();
 
 app.use(express.static(path.join(__dirname)));
 
-
 console.log(path.join(__dirname));
-
 
 app.use(bodyParser.json());
 app.use(morgan('dev'));
@@ -34,8 +32,8 @@ const { Server } = socketIO;
 // });
 const io = new Server(server, {
   cors: {
-    origin: ['http://localhost:5173','https://admin.socket.io/']
-  }
+    origin: ['http://localhost:5173', 'https://admin.socket.io/'],
+  },
 });
 SocketControllers(io);
 
@@ -52,7 +50,7 @@ SocketControllers(io);
 //   } else {
 //     socket.join(room);
 //   };
- 
+
 //   // Notify the clients that they are connected
 //   io.to(room).emit('players_connected', { room });
 
@@ -61,7 +59,7 @@ SocketControllers(io);
 //     // Handle the "ready" event, indicating the player is ready to start the game
 //     console.log('PLAYER READY');
 //     io.to(room).emit('player_ready', { player: socket.id });
-//   });  
+//   });
 
 //   socket.on('make_move', (move) => {
 //     // Handle the "make_move" event with the move data from the client
@@ -82,11 +80,6 @@ SocketControllers(io);
 //   return room;
 // }
 
-
-
-
-
-
 const routes = require('./controllers/routes.js');
 // const exampleRoute = require('');
 // const exampleRoute = require('');
@@ -98,17 +91,19 @@ app.get('/', routes.getPets);
 // app.use('/:id', loginRoute);
 
 app.get('/animals', (req, res) => {
-  routes.getAnimals(req, res)
+  routes.getAnimals(req, res);
 });
 
 app.get('/types', (req, res) => {
-  routes.getTypes(req, res)
+  routes.getTypes(req, res);
 });
 
 app.get('/organizations', (req, res) => {
-  routes.getOrganizations(req, res)
+  routes.getOrganizations(req, res);
 });
 
 server.listen(PORT, () => {
   console.log(`Server running on localhost:${PORT}`);
 });
+
+module.exports = app;
