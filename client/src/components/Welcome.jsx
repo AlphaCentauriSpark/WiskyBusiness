@@ -9,9 +9,9 @@ const Welcome = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(name, zip);
     setCookie('user', name);
     setCookie('zip', zip);
+    console.log(cookies.user, cookies.zip);
   };
   return (
     <div className="flex flex-col gap-5 items-center justify-evenly py-5 text-pink-500 font-comico-regular">
