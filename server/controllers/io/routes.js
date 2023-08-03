@@ -7,19 +7,19 @@ module.exports = (socket, io, rooms) => {
   
   //Matchmaking and room creation logic
   let room;
-  for (const [currentRoom, currentPlayers] of rooms) {
-    if (currentPlayers.players < 2) {
-      room = currentRoom;
+  for (let i in rooms) {
+    if (rooms[i].players.length < 2) {
+      room = i;
     }
   }
   
   if (!room) {
-    room = createNewRoom();
+    room = createNewRoom(socket.id);
     socket.join(room);
     console.log(`creating new room ${room}`);
   } else {
-    rooms.set(room, {players: rooms.get(room).players + 1});
-    console.log(`joining room ${room}, room now has ${rooms.get(room).players} players in it`);
+    rooms[room].players.push(socket.id);
+    console.log(`joining room ${room}, room now has ${rooms[room].players.length} players in it`);
     socket.join(room);
   };
   
@@ -39,7 +39,7 @@ module.exports = (socket, io, rooms) => {
   
   function createNewRoom() {
     const room = 'room_' + Math.random().toString(36).substr(2, 4);
-    rooms.set(room, { players: 1 });
+    rooms[room] = { players: [socket.id] };
     return room;
   }
   

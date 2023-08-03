@@ -4,19 +4,8 @@ import { useRouteLoaderData } from 'react-router-dom';
 
 import GameFinished from './GameFinished.jsx';
 
-import io from 'socket.io-client';
 
-const socket = io.connect('http://localhost:3000', {
-  reconnectionDelay: 1000,
-  reconnection: true,
-  reconnectionAttemps: 10,
-  transports: ['websocket'],
-  agent: false,
-  upgrade: false,
-  rejectUnauthorized: false
-});
-
-const Game = () => {
+const SoloGame = () => {
   //TODO add styling:
   // when you try to click the back of a card, it shakes
   // when there's a match, ding sound & cards size increases temporarily
@@ -31,10 +20,9 @@ const Game = () => {
   const petsData = useRouteLoaderData('root');
   const [turn, setTurn] = useState(0);
   const [waiting, setWaiting] = useState(false);
-  const [gameFinished, setGameFinished] = useState(false);
+  const [gameFinshed, setGameFinished] = useState(false);
   const [matchCount, setMatchCount] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [waitingForOpp, setWaitingForOpp] = useState(true);
 
   // Filter petsArr to only pets with images
   let petsArr = petsData.data.animals.sort(() => Math.random() - 0.5);
@@ -82,8 +70,6 @@ const Game = () => {
   }, []);
 
   const setFlipped = (petId, index) => {
-    const moveData = { cardFlipped: index };
-    socket.emit('make_move', moveData);
     
     setPetCards((pets) => {
       return pets.map((pet) => {
@@ -151,67 +137,16 @@ const Game = () => {
 
   useEffect(() => {}, [firstCard, secondCard, turn]);
 
-  useEffect(() => {
-    
-    // setSocket(io.connect('http://localhost:3000', {
-    //   reconnectionDelay: 1000,
-    //   reconnection: true,
-    //   reconnectionAttemps: 10,
-    //   transports: ['websocket'],
-    //   agent: false,
-    //   upgrade: false,
-    //   rejectUnauthorized: false
-    // })); 
-    // const socket = io(); 
-
-
-    // console.log('connecting to server soon...');
-
-    // socket.emit("msg", 5, "4", { 7: Uint8Array.from([8]) });
-
-
-    socket.on('connect', () => {
-      console.log('Connected to the server');
-      //socket.emit("msg", 5, "4", { 7: Uint8Array.from([8]) });
-
-      // Emit a "ready" event to the server when the player is ready to start the game
-      socket.emit('ready');
-
-      // // Handle the "player_ready" event received from the server
-      socket.on('player_ready', (data) => {
-        console.log('Player', data.player, 'is ready');
-      }); 
-
-      // // Example: Sending a "make_move" event to the server with move data
-      // const moveData = {move: 'move-data-here'};
-      // socket.emit('make_move', moveData);
-
-      // // Handle the "move_made" event received from the server
-      socket.on('move_made', (data) => {
-        console.log('Player', data.player, 'made a move:', data.move);
-      });
-    });
-
-    socket.on('disconnect', () => {
-      console.log('Disconnected from the server');
-    });
-
-    // Clean up the socket connection when the component is unmounted
-    return () => {
-      socket.disconnect();
-    };
-  }, []);
-
   if (loading) {
     return <div>Loading...</div>;
   }
   
   return (
     <div className="flex items-center justify-center">
-      {!gameFinished && !waitingForOpp ? (
+      {!gameFinshed ? (
         <div className="flex items-center flex-col justify-center gap-5 mt-14">
           <h1 className="text-4xl font-bold font-comico-regular mb-10 ml-5 text-medium-pink text-shadow-xl">
-            Flip and match! (Versus)
+            Flip and match! (Solo)
           </h1>
           <div className="grid grid-cols-6 gap-6 w-4/5 justify-center">
             {petCards.map((petCard, i) => (
@@ -229,11 +164,11 @@ const Game = () => {
             ))}
           </div>
         </div>
-      ) : gameFinished ? (
+      ) : (
         <GameFinished />
-      ) : (<div>Waiting for Opponent...<button onClick={() => setWaitingForOpp(false)}>Start</button></div>)}
+      )}
     </div>
   );
 };
 
-export default Game;
+export default SoloGame;
