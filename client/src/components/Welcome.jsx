@@ -9,7 +9,7 @@ const Welcome = () => {
   const [cookies, setCookie, removeCookie] = useCookies(['user', 'zip']);
   const [versus, setVersus] = useState(false);
   const [roomId, setRoomId] = useState('');
-  const room = Math.random().toString(36).substr(2, 4);
+  const room = Math.random().toString(36).substr(2, 8);
 
 
   const handleSubmit = (event) => {
