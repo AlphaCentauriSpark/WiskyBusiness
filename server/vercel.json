@@ -3,7 +3,8 @@
   "builds": [
     {
       "src": "./index.js",
-      "use": "@now/node"
+      "use": "@now/node",
+      "styles": "npx tailwindcss -i ./index.css -o ./dist/output.css --watch"
     }
   ],
   "routes": [
