@@ -12,9 +12,10 @@ import {
 } from 'react-router-dom';
 import Game from './components/MemoryGame/Game';
 import SoloGame from './components/MemoryGame/SoloGame';
-import Catalog from './components/Catalog';
-import Profile from './components/Profile';
-import Welcome from './components/Welcome';
+import Catalog from './components/Catalog.jsx';
+import Profile from './components/Profile.jsx';
+import Welcome from './components/Welcome.jsx';
+import Favorites from './components/Favorites.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -24,6 +25,7 @@ const router = createBrowserRouter(
       <Route path="versus" element={<Game />}></Route>
       <Route path="catalog" element={<Catalog />}></Route>
       <Route path="profile/:id" element={<Profile />}></Route>
+      <Route path="favorites" element={<Favorites />}></Route>
     </Route>
   )
 
