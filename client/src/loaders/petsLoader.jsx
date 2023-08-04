@@ -2,7 +2,9 @@ import axios from 'axios';
 
 const petsLoader = () => {
   return axios
-    .get('wiskey-business-server.vercel.app:3000/')
+    .get(
+      'https://wiskey-business-server-kvj6f98ia-alphacentaurispark.vercel.app/'
+    )
     .then((response) => {
       return response.data;
     })
