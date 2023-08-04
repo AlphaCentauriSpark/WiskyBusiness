@@ -35,7 +35,7 @@ const Game = () => {
   const [matches, setMatches] = useState([]);
   const petsData = useRouteLoaderData('root');
   const [turn, setTurn] = useState(0);
-  const [waiting, setWaiting] = useState(true);
+  const [waiting, setWaiting] = useState(false);
   const [gameFinished, setGameFinished] = useState(false);
   const [matchCount, setMatchCount] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -96,6 +96,44 @@ const Game = () => {
   ]);
 
 
+  const setFlipped = (petId, index) => {
+    socket.emit('make_move', petId, index);
+
+    // setPetCards((pets) => {
+    //   return pets.map((pet) => {
+    //     if (petId === pet.id && index === pet.index) {
+    //       return { ...pet, isFlipped: !pet.isFlipped };
+    //     }
+    //     return pet;
+    //   });
+    // });
+
+    // if (turn === 0) {
+    //   setFirstCard(petId);
+    //   setTurn(1);
+    // } else {
+    //   setSecondCard(petId);
+    //   setTurn(0);
+    // }
+  };
+
+
+  const wait = () => {
+    setWaiting(true);
+    setTimeout(() => {
+      setTurn(0);
+      setPetCards((currPetCards) => {
+        return currPetCards.map((currPetCard) => {
+          if (currPetCard.id === firstCard || currPetCard.id === secondCard) {
+            currPetCard.isFlipped = false;
+          }
+          return currPetCard;
+        });
+      });
+      setWaiting(false);
+    }, 2000);
+  };
+
   useEffect(() => {
     setHomeStatus(true);
     setPetCards((unshuffledCards) => {
@@ -103,28 +141,6 @@ const Game = () => {
     });
     setLoading(false);
   }, []);
-
-  const setFlipped = (petId, index) => {
-    const moveData = { cardFlipped: index };
-    socket.emit('make_move', moveData);
-
-    setPetCards((pets) => {
-      return pets.map((pet) => {
-        if (petId === pet.id && index === pet.index) {
-          return { ...pet, isFlipped: !pet.isFlipped };
-        }
-        return pet;
-      });
-    });
-
-    if (turn === 0) {
-      setFirstCard(petId);
-      setTurn(1);
-    } else {
-      setSecondCard(petId);
-      setTurn(0);
-    }
-  };
 
 
   useEffect(() => {
@@ -157,25 +173,6 @@ const Game = () => {
   }, [secondCard]);
 
 
-  const wait = () => {
-    setWaiting(true);
-    setTimeout(() => {
-      setTurn(0);
-      setPetCards((currPetCards) => {
-        return currPetCards.map((currPetCard) => {
-          if (currPetCard.id === firstCard || currPetCard.id === secondCard) {
-            currPetCard.isFlipped = false;
-          }
-          return currPetCard;
-        });
-      });
-      setWaiting(false);
-    }, 2000);
-  };
-
-
-  useEffect(() => {}, [firstCard, secondCard, turn]);
-
   useEffect(() => {
     const newSocket = io.connect('http://localhost:3000', {
       reconnectionDelay: 1000,
@@ -196,24 +193,22 @@ const Game = () => {
     console.log('name: ', cookies.user);
     socket.on('connect', () => {
       console.log('Connected to the server');
+      console.log(petCards);
 
-      socket.emit('room_joined', room_id);
+      socket.emit('room_joined', room_id, cookies.user, petCards);
 
-      socket.emit('test');
-
-      // Emit a "ready" event to the server when the player is ready to start the game
-      socket.emit('ready', (socketId) => {
-        console.log('socketId: ', socketId);
-
+      socket.on('game_data', (data) => {
+        console.log(data);
+        setPetCards(data);
       });
 
       socket.on('unpause', () => {
         //unpause game
-        setWaiting(true);
+        setWaitingForOpp(false);
       });
 
       socket.on('pause', () => {
-        setWaiting(false);
+        setWaitingForOpp(true);
       });
 
       socket.on('id', (id) => {
@@ -221,32 +216,67 @@ const Game = () => {
         setPlayerId(id);
       });
 
-      // // // Handle the "player_ready" event received from the server
-      // socket.on('player_ready', (data) => {
-      //   console.log('Player', data.player, 'is ready');
-      // });
+      socket.on('move_made', (data) => {
+        console.log('Player', data.player, 'made a move:', data.index, 'pet id: ', data.pet_id);
+
+        setPetCards((pets) => {
+          return pets.map((pet) => {
+            if (data.pet_id === pet.id && data.index === pet.index) {
+              return { ...pet, isFlipped: !pet.isFlipped };
+            }
+            return pet;
+          });
+        });
+
+        if (turn === 0) {
+          setFirstCard(data.pet_id);
+          setTurn(1);
+        } else {
+          setSecondCard(data.pet_id);
+          setTurn(0);
+        }
+
+      });
+
+      // const setFlipped = (petId, index) => {
+      //   socket.emit('make_move', index);
+
+      //   setPetCards((pets) => {
+      //     return pets.map((pet) => {
+      //       if (petId === pet.id && index === pet.index) {
+      //         return { ...pet, isFlipped: !pet.isFlipped };
+      //       }
+      //       return pet;
+      //     });
+      //   });
+
+      //   if (turn === 0) {
+      //     setFirstCard(petId);
+      //     setTurn(1);
+      //   } else {
+      //     setSecondCard(petId);
+      //     setTurn(0);
+      //   }
+      // };
 
       // // Handle the "player_ready" event received from the server
-      socket.on('players_ready', (room) => {
-        console.log('Room: ', room);
-        let opp = '';
-        if (room.players[0] == playerId) {
-          opp = room.players[1];
-        } else {
-          opp = room.players[0];
-        }
-        setOppId(opp);
-        setWaitingForOpp(false);
-      });
+      // socket.on('players_ready', (room) => {
+      //   console.log('Room: ', room);
+      //   let opp = '';
+      //   if (room.players[0] == playerId) {
+      //     opp = room.players[1];
+      //   } else {
+      //     opp = room.players[0];
+      //   }
+      //   setOppId(opp);
+      //   setWaitingForOpp(false);
+      // });
 
       // // Example: Sending a "make_move" event to the server with move data
       // const moveData = {move: 'move-data-here'};
       // socket.emit('make_move', moveData);
 
       // // Handle the "move_made" event received from the server
-      socket.on('move_made', (data) => {
-        console.log('Player', data.player, 'made a move:', data.move);
-      });
     });
 
     // Clean up the socket connection when the component is unmounted
@@ -266,7 +296,7 @@ const Game = () => {
       {!gameFinished && !waitingForOpp ? (
         <div className="flex items-center flex-col justify-center gap-5 mt-14">
           <h1 className="text-4xl font-bold font-comico-regular mb-10 ml-5 text-medium-pink text-shadow-xl">
-            Flip and match! ({playerId} Versus {oppId})
+            Flip and match! (Versus)
           </h1>
           <p>Flip count: {matches.length}</p>
           <div className="grid grid-cols-6 gap-6 w-4/5 justify-center">
