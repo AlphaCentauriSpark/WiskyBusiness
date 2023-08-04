@@ -24,18 +24,18 @@ const SocketControllers = require('./controllers/io');
 const server = http.createServer(app); // Use Express app to create the HTTP server
 //const io = socketIO(server); // Pass the HTTP server to socket.io
 
-const { Server } = socketIO;
+// const { Server } = socketIO;
 // const io = new Server(server, {
 //   cors: {
 //     origin: 'http://127.0.0.1:5173/home' // Set this to the specific origin of your React app, e.g., 'http://localhost:3000'
 //   }
 // });
-const io = new Server(server, {
-  cors: {
-    origin: ['http://localhost:5173', 'https://admin.socket.io/'],
-  },
-});
-SocketControllers(io);
+// const io = new Server(server, {
+//   cors: {
+//     origin: ['http://localhost:5173', 'https://admin.socket.io/'],
+//   },
+// });
+// SocketControllers(io);
 
 //const rooms = new Map();
 
