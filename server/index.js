@@ -5,7 +5,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const PORT = 3001;
+const PORT = 3000;
 require('dotenv').config();
 
 app.use(express.static(path.join(__dirname)));
