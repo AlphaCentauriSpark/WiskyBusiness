@@ -28,7 +28,7 @@ const App = () => {
           )
           .then((results) => {
             let postcode = results.data.results[0].components.postcode;
-            return axios.get('http://localhost:3000/animals', {
+            return axios.get('wiskey-business-server.vercel.app:3000/animals', {
               params: {
                 zip: postcode,
               },
@@ -45,7 +45,7 @@ const App = () => {
         if (error.code == error.PERMISSION_DENIED) {
           let postcode = cookies.zip || 10005;
           return axios
-            .get('http://localhost:3000/animals', {
+            .get('wiskey-business-server.vercel.app:3000/animals', {
               params: {
                 zip: postcode,
               },
