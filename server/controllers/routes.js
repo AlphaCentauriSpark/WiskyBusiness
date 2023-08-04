@@ -59,6 +59,7 @@ module.exports.getTypes = (req, res) => {
   })
     .then((tokenObj) => {
       let token = tokenObj.data.token_type + ' ' + tokenObj.data.access_token;
+      console.log(token);
       let category = 'types';
       axios({
         method: 'get',
