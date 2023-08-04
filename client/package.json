@@ -4,8 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "deploy": "vite build && npx tailwindcss -i ./index.css -o ./dist/output.css",
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && npx tailwindcss -i ./index.css -o ./dist/output.css",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "build:tailwind": "npx tailwindcss -i ./index.css -o ./dist/output.css",

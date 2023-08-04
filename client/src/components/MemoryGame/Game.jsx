@@ -2,6 +2,7 @@ import GameCard from './GameCard.jsx';
 import { useState, useEffect, useContext, useRef } from 'react';
 import { useRouteLoaderData, useParams } from 'react-router-dom';
 import { HomeContext } from '../../App.jsx';
+import { AnimalContext } from '../../App.jsx';
 import { useCookies } from 'react-cookie';
 
 
@@ -33,7 +34,6 @@ const Game = () => {
   const [firstCard, setFirstCard] = useState('');
   const [secondCard, setSecondCard] = useState('');
   const [matches, setMatches] = useState([]);
-  const petsData = useRouteLoaderData('root');
   const [turn, setTurn] = useState(0);
   const [waiting, setWaiting] = useState(false);
   const [gameFinished, setGameFinished] = useState(false);
@@ -46,8 +46,8 @@ const Game = () => {
   const setHomeStatus = useContext(HomeContext);
 
   const {room_id} = useParams();
-  let petsArr = petsData.data.animals.sort(() => Math.random() - 0.5);
-
+  let petsArr = useContext(AnimalContext);
+  console.log('pets arr', petsArr);
 
   let allPets = petsArr
     .filter((pets) => {
@@ -298,7 +298,6 @@ const Game = () => {
           <h1 className="text-4xl font-bold font-comico-regular mb-10 ml-5 text-medium-pink text-shadow-xl">
             Flip and match! (Versus)
           </h1>
-          <p>Flip count: {matches.length}</p>
           <div className="grid grid-cols-6 gap-6 w-4/5 justify-center">
             {petCards.map((petCard, i) => (
               <GameCard
