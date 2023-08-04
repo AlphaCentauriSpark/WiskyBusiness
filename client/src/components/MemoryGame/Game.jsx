@@ -1,5 +1,5 @@
 import GameCard from './GameCard.jsx';
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, useRef } from 'react';
 import { useRouteLoaderData, useParams } from 'react-router-dom';
 import { HomeContext } from '../../App.jsx';
 import { useCookies } from 'react-cookie';
@@ -9,15 +9,6 @@ import GameFinished from './GameFinished.jsx';
 
 import io from 'socket.io-client';
 
-const socket = io.connect('http://localhost:3000', {
-  reconnectionDelay: 1000,
-  reconnection: true,
-  reconnectionAttemps: 10,
-  transports: ['websocket'],
-  agent: false,
-  upgrade: false,
-  rejectUnauthorized: false,
-});
 
 const Game = () => {
   //TODO add styling:
@@ -25,14 +16,26 @@ const Game = () => {
   // flip animation if no match
   // ability to turn sound on/off
 
-  console.log('TESTTESTTESTTESTTESTTESTTEST');
+  // const connect = useRef(io.connect('http://localhost:3000', {
+  //   reconnectionDelay: 1000,
+  //   reconnection: true,
+  //   reconnectionAttemps: 10,
+  //   transports: ['websocket'],
+  //   agent: false,
+  //   upgrade: false,
+  //   rejectUnauthorized: false,
+  // }));
+
+  // const socket = connect.current;
+
+  const [socket, setSocket] = useState(null);
 
   const [firstCard, setFirstCard] = useState('');
   const [secondCard, setSecondCard] = useState('');
   const [matches, setMatches] = useState([]);
   const petsData = useRouteLoaderData('root');
   const [turn, setTurn] = useState(0);
-  const [waiting, setWaiting] = useState(false);
+  const [waiting, setWaiting] = useState(true);
   const [gameFinished, setGameFinished] = useState(false);
   const [matchCount, setMatchCount] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -41,14 +44,17 @@ const Game = () => {
   const [oppId, setOppId] = useState('');
   const [cookies, setCookie, removeCookie] = useCookies();
   const setHomeStatus = useContext(HomeContext);
+
   const {room_id} = useParams();
   let petsArr = petsData.data.animals.sort(() => Math.random() - 0.5);
+
 
   let allPets = petsArr
     .filter((pets) => {
       return pets['primary_photo_cropped'] !== null;
     })
     .slice(0, 6);
+
 
   let firstPetCards = allPets.map((petCard, index) => {
     const petDetails = {
@@ -62,9 +68,10 @@ const Game = () => {
       isFlipped: false,
       photo: petCard['primary_photo_cropped'].small,
     };
-    console.log('pet details inside: ', petDetails);
+
     return petDetails;
   });
+
 
   let secondPetCards = allPets.map((petCard, index) => {
     const petDetails = {
@@ -78,15 +85,16 @@ const Game = () => {
       isFlipped: false,
       photo: petCard['primary_photo_cropped'].small,
     };
+
     return petDetails;
   });
+
 
   const [petCards, setPetCards] = useState([
     ...firstPetCards,
     ...secondPetCards,
   ]);
 
-  console.log('these are the final pet cards!!!: ', secondPetCards);
 
   useEffect(() => {
     setHomeStatus(true);
@@ -118,11 +126,13 @@ const Game = () => {
     }
   };
 
+
   useEffect(() => {
     if (matchCount === petCards.length) {
       setGameFinished(true);
     }
   }, [matchCount]);
+
 
   useEffect(() => {
     if (firstCard && secondCard) {
@@ -146,6 +156,7 @@ const Game = () => {
     }
   }, [secondCard]);
 
+
   const wait = () => {
     setWaiting(true);
     setTimeout(() => {
@@ -162,19 +173,47 @@ const Game = () => {
     }, 2000);
   };
 
+
   useEffect(() => {}, [firstCard, secondCard, turn]);
 
   useEffect(() => {
+    const newSocket = io.connect('http://localhost:3000', {
+      reconnectionDelay: 1000,
+      reconnection: true,
+      reconnectionAttemps: 10,
+      transports: ['websocket'],
+      agent: false,
+      upgrade: false,
+      rejectUnauthorized: false,
+    });
+
+    setSocket(newSocket);
+  }, [])
+
+  useEffect(() => {
+    if (!socket) { return; };
+
     console.log('name: ', cookies.user);
     socket.on('connect', () => {
       console.log('Connected to the server');
-      
+
       socket.emit('room_joined', room_id);
+
+      socket.emit('test');
 
       // Emit a "ready" event to the server when the player is ready to start the game
       socket.emit('ready', (socketId) => {
         console.log('socketId: ', socketId);
-        
+
+      });
+
+      socket.on('unpause', () => {
+        //unpause game
+        setWaiting(true);
+      });
+
+      socket.on('pause', () => {
+        setWaiting(false);
       });
 
       socket.on('id', (id) => {
@@ -210,15 +249,11 @@ const Game = () => {
       });
     });
 
-    socket.on('disconnect', () => {
-      console.log('Disconnected from the server');
-    });
-
     // Clean up the socket connection when the component is unmounted
     return () => {
       socket.disconnect();
     };
-  }, []);
+  }, [socket]);
 
   if (loading) {
     return <div>Loading...</div>;

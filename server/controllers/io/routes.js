@@ -1,42 +1,41 @@
 const test = require('./test.js');
 const make_move = require('./make_move.js');
 
+const socketRooms = {};
+
+game: {
+  card1: {
+    flipped: bool;
+    matched: bool;
+    petdata: { . . . };
+  }
+}
+
+
 module.exports = (socket, io, rooms) => {
 
   console.log('New player connected:', socket.id);
-  let room;
+
 
   //Matchmaking and room creation logic
   socket.on('room_joined', (room_id) => {
-    room = room_id;
-    if (!rooms[room]) {
-      rooms[room] = { players: [] };
+    socketRooms[socket.id] = room_id;
+    if (!rooms[socketRooms[socket.id]]) {
+      rooms[socketRooms[socket.id]] = { players: [], game: {} };
+      //populate game data
     }
-    rooms[room].players.push(socket.id);
-    socket.join(room);
-    if (rooms[room].players.length === 2) {
-      io.to(room).emit('unpause');
+    rooms[socketRooms[socket.id]].players.push(socket.id);
+    console.log(rooms[socketRooms[socket.id]]);
+    socket.join(socketRooms[socket.id]);
+
+    if (rooms[socketRooms[socket.id]].players.length === 2) {
+      io.to(socketRooms[socket.id]).emit('unpause');
     }
-  })
-  // io.to(room_id).emit('players_ready', rooms[room_id]);
+  });
 
-  // if (!room) {
-  //   room = createNewRoom(socket.id);
-  //   socket.join(room);
-  //   console.log(`creating new room ${room}`);
-  // } else {
-  //   rooms[room].players.push(socket.id);
-  //   console.log(`joining room ${room}, room now has ${rooms[room].players.length} players in it`);
-  //   socket.join(room);
-  //   io.to(room).emit('players_ready', rooms[room]);
-
-  //   //axios call; emit data
-  // };
-
-  console.log('rooms: ', rooms);
 
   // Notify the clients that they are connected
-  io.to(room).emit('players_connected', { room });
+  io.to(socketRooms[socket.id]).emit('players_connected', socketRooms[socket.id] );
 
 
   socket.on('ready', (cb) => {
@@ -48,14 +47,15 @@ module.exports = (socket, io, rooms) => {
   });
 
   socket.on('make_move', (move) => {
-    make_move(move, socket, io, room);
+    // store & send game state
+    make_move(move, socket, io, socketRooms[socket.id]);
   });
-  
-  
+
+
   socket.on('disconnect', () => {
     console.log('server disc');
-    let i = rooms[room].players.indexOf(socket.id);
-    rooms[room].players.splice(i, 1);
-    io.to(room).emit('pause');
-  })
+    const i = rooms[socketRooms[socket.id]].players.indexOf(socket.id);
+    rooms[socketRooms[socket.id]].players.splice(i, 1);
+    io.to(socketRooms[socket.id]).emit('pause');
+  });
 };
