@@ -90,17 +90,11 @@ app.get('/', routes.getPets);
 // app.use('/catalog', registerRoute);
 // app.use('/:id', loginRoute);
 
-app.get('/animals', (req, res) => {
-  routes.getAnimals(req, res);
-});
+app.get('/animals', routes.getAnimals);
 
-app.get('/types', (req, res) => {
-  routes.getTypes(req, res);
-});
+app.get('/types', routes.getTypes);
 
-app.get('/organizations', (req, res) => {
-  routes.getOrganizations(req, res);
-});
+app.get('/organizations', routes.getOrganizations);
 
 server.listen(PORT, () => {
   console.log(`Server running on localhost:${PORT}`);
