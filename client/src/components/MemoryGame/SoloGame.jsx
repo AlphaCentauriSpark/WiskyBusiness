@@ -1,6 +1,7 @@
 import GameCard from './GameCard.jsx';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useRouteLoaderData } from 'react-router-dom';
+import { AnimalContext } from '../../App.jsx';
 
 import GameFinished from './GameFinished.jsx';
 
@@ -29,7 +30,7 @@ const SoloGame = () => {
   // Filter petsArr to only pets with images
 
   console.log(petsData);
-  let petsArr = petsData.sort(() => Math.random() - 0.5);
+  let petsArr = useContext(AnimalContext);
 
   let allPets = petsArr
     .filter((pets) => {

@@ -2,6 +2,7 @@ import GameCard from './GameCard.jsx';
 import { useState, useEffect, useContext } from 'react';
 import { useRouteLoaderData } from 'react-router-dom';
 import { HomeContext } from '../../App.jsx';
+import { AnimalContext } from '../../App.jsx';
 import { useCookies } from 'react-cookie';
 
 import GameFinished from './GameFinished.jsx';
@@ -29,7 +30,6 @@ const Game = () => {
   const [firstCard, setFirstCard] = useState('');
   const [secondCard, setSecondCard] = useState('');
   const [matches, setMatches] = useState([]);
-  const petsData = useRouteLoaderData('root');
   const [turn, setTurn] = useState(0);
   const [waiting, setWaiting] = useState(false);
   const [gameFinished, setGameFinished] = useState(false);
@@ -41,8 +41,8 @@ const Game = () => {
   const [cookies, setCookie, removeCookie] = useCookies();
   const setHomeStatus = useContext(HomeContext);
 
-  let petsArr = petsData.data.animals.sort(() => Math.random() - 0.5);
-
+  let petsArr = useContext(AnimalContext);
+  console.log('pets arr', petsArr);
   let allPets = petsArr
     .filter((pets) => {
       return pets['primary_photo_cropped'] !== null;
