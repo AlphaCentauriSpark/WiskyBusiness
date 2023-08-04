@@ -74,10 +74,12 @@ module.exports.getTypes = (req, res) => {
         })
         .catch((err) => {
           console.log(err);
+          res.status(400).send(err);
         });
     })
     .catch((err) => {
       console.log(err);
+      res.status(400).send(err);
     });
 };
 
@@ -107,9 +109,11 @@ module.exports.getOrganizations = (req, res) => {
         })
         .catch((err) => {
           console.log(err);
+          res.status(400).send(err);
         });
     })
     .catch((err) => {
       console.log(err);
+      res.status(400).send(err);
     });
 };

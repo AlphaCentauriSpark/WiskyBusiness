@@ -28,14 +28,11 @@ const App = () => {
           )
           .then((results) => {
             let postcode = results.data.results[0].components.postcode;
-            return axios.get(
-              'ip-172-31-30-86.us-west-1.compute.internal:3000/animals',
-              {
-                params: {
-                  zip: postcode,
-                },
-              }
-            );
+            return axios.get('http://54.176.189.181:3000/animals', {
+              params: {
+                zip: postcode,
+              },
+            });
           })
           .then((response) => {
             setAnimals(response.data);
@@ -48,7 +45,7 @@ const App = () => {
         if (error.code == error.PERMISSION_DENIED) {
           let postcode = cookies.zip || 10005;
           return axios
-            .get('ip-172-31-30-86.us-west-1.compute.internal:3000/animals', {
+            .get('http://54.176.189.181:3000/animals', {
               params: {
                 zip: postcode,
               },
