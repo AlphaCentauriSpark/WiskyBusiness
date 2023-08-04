@@ -1,19 +1,10 @@
 const axios = require('axios');
 const path = require('node:path');
 const dotenv = require('dotenv').config({ path: '../.env' });
-const data = require('./seed.js');
-
-module.exports.getPets = async (req, res) => {
-  try {
-    res.status(200).send(data);
-  } catch (error) {
-    console.log(error.message || error);
-    res.status(400).send(error);
-  }
-};
 
 module.exports.getAnimals = (req, res) => {
-  console.log(req.query.zip);
+  console.log('REQ QUERY', req.query);
+  console.log('ZIP CODE', req.query.zip);
   axios.defaults.baseURL = 'https://api.petfinder.com/v2/';
   axios({
     method: 'post',
@@ -26,7 +17,9 @@ module.exports.getAnimals = (req, res) => {
   })
     .then((tokenObj) => {
       let token = tokenObj.data.token_type + ' ' + tokenObj.data.access_token;
-      let category = `animals/?location=${req.query.zip}&limit=75`;
+      let zipcode = req.query.zip || 77096;
+      console.log('zip code', zipcode);
+      let category = `animals/?location=${zipcode}&limit=75`;
       axios({
         method: 'get',
         url: category,
@@ -35,15 +28,16 @@ module.exports.getAnimals = (req, res) => {
         },
       })
         .then((response) => {
+          console.log('SECOND THEN Token WORKS', token);
           res.send(response.data.animals);
         })
         .catch((err) => {
-          console.log(err);
+          console.log('FIRST ERROR Token broken', token);
           res.status(400).send(err);
         });
     })
     .catch((err) => {
-      console.log(err);
+      console.log('SECOND ERROR ENV broken', token);
       res.status(400).send(err);
     });
 };
