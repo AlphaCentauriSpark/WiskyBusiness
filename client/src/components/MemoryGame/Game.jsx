@@ -1,8 +1,9 @@
 import GameCard from './GameCard.jsx';
 import { useState, useEffect, useContext } from 'react';
-import { useRouteLoaderData } from 'react-router-dom';
+import { useRouteLoaderData, useParams } from 'react-router-dom';
 import { HomeContext } from '../../App.jsx';
 import { useCookies } from 'react-cookie';
+
 
 import GameFinished from './GameFinished.jsx';
 
@@ -40,7 +41,7 @@ const Game = () => {
   const [oppId, setOppId] = useState('');
   const [cookies, setCookie, removeCookie] = useCookies();
   const setHomeStatus = useContext(HomeContext);
-
+  const {room_id} = useParams();
   let petsArr = petsData.data.animals.sort(() => Math.random() - 0.5);
 
   let allPets = petsArr
@@ -167,10 +168,13 @@ const Game = () => {
     console.log('name: ', cookies.user);
     socket.on('connect', () => {
       console.log('Connected to the server');
+      
+      socket.emit('room_joined', room_id);
 
       // Emit a "ready" event to the server when the player is ready to start the game
       socket.emit('ready', (socketId) => {
         console.log('socketId: ', socketId);
+        
       });
 
       socket.on('id', (id) => {
@@ -229,7 +233,7 @@ const Game = () => {
           <h1 className="text-4xl font-bold font-comico-regular mb-10 ml-5 text-medium-pink text-shadow-xl">
             Flip and match! ({playerId} Versus {oppId})
           </h1>
-          <p>Flip count: {matches.length}</p>c
+          <p>Flip count: {matches.length}</p>
           <div className="grid grid-cols-6 gap-6 w-4/5 justify-center">
             {petCards.map((petCard, i) => (
               <GameCard
