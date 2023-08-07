@@ -14,11 +14,11 @@ Wisky Business is a simple multiplayer memory game with the goal of raising awar
 
 ### Team
 
-Full-Stack Engineer Zach Morrison [@Zach Morrison](https://github.com/zach-morrison)
-Full-Stack Engineer April Castaneda [@April Castaneda](https://github.com/AprilMay812)
-Full-Stack Engineer David Oluwajana [@David Oluwajana](https://github.com/davetwo7)
-Full-Stack Engineer and Designer Lauren Swersky [@Lauren Swersky](https://github.com/swersk)
-Full-Stack Engineer and Project Manager Akash Rajan [@Akash Rajan](https://github.com/akashrdev)
+Full-Stack Engineer Zach Morrison [@Zach Morrison](https://github.com/zach-morrison)  
+Full-Stack Engineer April Castaneda [@April Castaneda](https://github.com/AprilMay812)  
+Full-Stack Engineer David Oluwajana [@David Oluwajana](https://github.com/davetwo7)  
+Full-Stack Engineer and Designer Lauren Swersky [@Lauren Swersky](https://github.com/swersk)  
+Full-Stack Engineer and Project Manager Akash Rajan [@Akash Rajan](https://github.com/akashrdev)  
 
 ### Demo
 
