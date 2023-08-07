@@ -1,6 +1,6 @@
 # Wisky Business
 
-Wisky Business is a simple multiplayer memory game with the goal of raising awareness for animals in need of adoption in your local area. Play solo, invite a friend, or skip straight to our catalog showcasing furry friends in need of adoption at a shelter near you!
+Wisky Business is a multi-page multiplayer memory game with the goal of raising awareness for animals in need of adoption in your local area. Play solo, invite a friend, or skip straight to our catalog showcasing furry friends in need of adoption at a shelter near you!
 
 ### Table of Contents
 
