@@ -90,7 +90,6 @@ const Pet = ({ photo, name, species, gender, animal }) => {
   };
 
   const handleShareClick = () => {
-    console.log(animal);
     const link = `https://www.facebook.com/sharer/sharer.php?u=https://127.0.0.1:5173/profile/${animal.id}&quote=Available%20%20for%20adoption!`;
 
     window.open(link, '_blank');
