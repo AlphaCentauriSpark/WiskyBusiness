@@ -6,6 +6,9 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const PORT = 3000;
+const http = require('http');
+const socketIO = require('socket.io'); // Import socket.io
+const SocketControllers = require('./controllers/io');
 require('dotenv').config();
 
 app.use(express.static(path.join(__dirname)));
@@ -17,9 +20,6 @@ app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors());
-const http = require('http');
-const socketIO = require('socket.io'); // Import socket.io
-const SocketControllers = require('./controllers/io');
 
 const server = http.createServer(app); // Use Express app to create the HTTP server
 //const io = socketIO(server); // Pass the HTTP server to socket.io
@@ -81,14 +81,8 @@ SocketControllers(io);
 // }
 
 const routes = require('./controllers/routes.js');
-// const exampleRoute = require('');
-// const exampleRoute = require('');
-// const exampleRoute = require('');
 
 app.get('/', routes.getAnimals);
-// app.use('/multiplayer', reviewRoute);
-// app.use('/catalog', registerRoute);
-// app.use('/:id', loginRoute);
 
 app.get('/animals', routes.getAnimals);
 

@@ -1,16 +1,18 @@
-import axios from 'axios';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
-import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import Card from './Card.jsx';
-import { AnimalContext } from '../App';
 import { useContext, useState, useEffect } from 'react';
+import axios from 'axios';
+import { AnimalContext } from '../App';
 import { HomeContext } from '../App.jsx';
 import { useCookies } from 'react-cookie';
+import {
+  Grid,
+  Box,
+  Stack,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+} from '@mui/material';
+import Card from './Card.jsx';
 
 const Catalog = () => {
   const [speciesFilter, setSpeciesFilter] = useState('all');

@@ -1,25 +1,26 @@
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import Tooltip from '@mui/material/Tooltip';
-import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-// import LocalLibraryIcon from '@mui/icons-material/LocalLibrary';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import IosShareOutlinedIcon from '@mui/icons-material/IosShareOutlined';
 import { useContext } from 'react';
-// import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PetContext } from '../App';
 import { useCookies } from 'react-cookie';
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
+import {
+  Card,
+  CardActions,
+  CardContent,
+  Tooltip,
+  CardMedia,
+  Button,
+  Typography,
+} from '@mui/material';
+import {
+  InfoOutlined,
+  IosShareOutlined,
+  FavoriteBorderOutlined,
+  FavoriteOutlined,
+} from '@mui/icons-material';
 
 const Pet = ({ photo, name, species, gender, animal }) => {
   const setCurrentPet = useContext(PetContext)[1];
   const [cookies, setCookie, removeCookie] = useCookies();
-
   const navigate = useNavigate();
 
   const handleCardClick = (evt) => {
@@ -137,7 +138,7 @@ const Pet = ({ photo, name, species, gender, animal }) => {
               data-animal={JSON.stringify(animal)}
               data-id={animal.id.toString()}
             >
-              <FavoriteOutlinedIcon />
+              <FavoriteOutlined />
             </Button>
           ) : (
             <Button
@@ -145,13 +146,13 @@ const Pet = ({ photo, name, species, gender, animal }) => {
               data-animal={JSON.stringify(animal)}
               data-id={animal.id.toString()}
             >
-              <FavoriteBorderOutlinedIcon />
+              <FavoriteBorderOutlined />
             </Button>
           )}
         </Tooltip>
         <Tooltip title="Share">
           <Button onClick={handleShareClick}>
-            <IosShareOutlinedIcon />
+            <IosShareOutlined />
           </Button>
         </Tooltip>
       </CardActions>

@@ -1,11 +1,8 @@
 import { useState, useEffect, createContext } from 'react';
-
 import axios from 'axios';
 import { Outlet, Link } from 'react-router-dom';
-
 import Stack from '@mui/material/Stack';
 import { useCookies } from 'react-cookie';
-
 export const AnimalContext = createContext();
 export const PetContext = createContext();
 export const HomeContext = createContext();
@@ -78,12 +75,6 @@ const App = () => {
                 >
                   Home
                 </Link>
-
-                {/* {isHome ?
-                <Link className="rounded-full bg-pink-300 p-4 hover:bg-sky-300/80 transition-colors duration-150 text-shadow-sm" to="/home">Join a Game!</Link>
-                :
-                <Link className="rounded-full bg-pink-300 p-4 hover:bg-sky-300/80 transition-colors duration-150 text-shadow-sm" to="/home">Play a game!</Link>
-            } */}
               </div>
               <p className="text-5xl font-bold font-comico-regular text-shadow-lg group hover:text-pink-200 transition-colors duration-150">
                 Whisky{' '}

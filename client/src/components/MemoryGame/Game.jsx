@@ -5,11 +5,9 @@ import { HomeContext } from '../../App.jsx';
 import { AnimalContext } from '../../App.jsx';
 import { useCookies } from 'react-cookie';
 
-
 import GameFinished from './GameFinished.jsx';
 
 import io from 'socket.io-client';
-
 
 const Game = () => {
   //TODO add styling:
@@ -39,13 +37,13 @@ const Game = () => {
   const [gameFinished, setGameFinished] = useState(false);
   const [matchCount, setMatchCount] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [waitingForOpp, setWaitingForOpp] = useState(true);
+  const [waitingForOpp, setWaitingForOpp] = useState(false);
   const [playerId, setPlayerId] = useState('');
   const [oppId, setOppId] = useState('');
   const [cookies, setCookie, removeCookie] = useCookies();
   const setHomeStatus = useContext(HomeContext);
 
-  const {room_id} = useParams();
+  const { room_id } = useParams();
   let petsArr = useContext(AnimalContext);
   console.log('pets arr', petsArr);
 
@@ -54,7 +52,6 @@ const Game = () => {
       return pets['primary_photo_cropped'] !== null;
     })
     .slice(0, 6);
-
 
   let firstPetCards = allPets.map((petCard, index) => {
     const petDetails = {
@@ -72,7 +69,6 @@ const Game = () => {
     return petDetails;
   });
 
-
   let secondPetCards = allPets.map((petCard, index) => {
     const petDetails = {
       id: petCard.id,
@@ -89,12 +85,10 @@ const Game = () => {
     return petDetails;
   });
 
-
   const [petCards, setPetCards] = useState([
     ...firstPetCards,
     ...secondPetCards,
   ]);
-
 
   const setFlipped = (petId, index) => {
     socket.emit('make_move', petId, index);
@@ -116,7 +110,6 @@ const Game = () => {
     //   setTurn(0);
     // }
   };
-
 
   const wait = () => {
     setWaiting(true);
@@ -142,13 +135,11 @@ const Game = () => {
     setLoading(false);
   }, []);
 
-
   useEffect(() => {
     if (matchCount === petCards.length) {
       setGameFinished(true);
     }
   }, [matchCount]);
-
 
   useEffect(() => {
     if (firstCard && secondCard) {
@@ -172,7 +163,6 @@ const Game = () => {
     }
   }, [secondCard]);
 
-
   useEffect(() => {
     const newSocket = io.connect('http://localhost:3000', {
       reconnectionDelay: 1000,
@@ -185,10 +175,12 @@ const Game = () => {
     });
 
     setSocket(newSocket);
-  }, [])
+  }, []);
 
   useEffect(() => {
-    if (!socket) { return; };
+    if (!socket) {
+      return;
+    }
 
     console.log('name: ', cookies.user);
     socket.on('connect', () => {
@@ -207,9 +199,9 @@ const Game = () => {
         setWaitingForOpp(false);
       });
 
-      socket.on('pause', () => {
-        setWaitingForOpp(true);
-      });
+      // socket.on('pause', () => {
+      //   setWaitingForOpp(true);
+      // });
 
       socket.on('id', (id) => {
         console.log('your id is: ', id);
@@ -217,7 +209,14 @@ const Game = () => {
       });
 
       socket.on('move_made', (data) => {
-        console.log('Player', data.player, 'made a move:', data.index, 'pet id: ', data.pet_id);
+        console.log(
+          'Player',
+          data.player,
+          'made a move:',
+          data.index,
+          'pet id: ',
+          data.pet_id
+        );
 
         setPetCards((pets) => {
           return pets.map((pet) => {
@@ -235,7 +234,6 @@ const Game = () => {
           setSecondCard(data.pet_id);
           setTurn(0);
         }
-
       });
 
       // const setFlipped = (petId, index) => {
@@ -289,8 +287,6 @@ const Game = () => {
     return <div>Loading...</div>;
   }
 
-  console.log('test in main');
-
   return (
     <div className="flex items-center justify-center ">
       {!gameFinished && !waitingForOpp ? (
@@ -314,7 +310,7 @@ const Game = () => {
             ))}
           </div>
         </div>
-      ) : gameFinished ? (
+      ) : gameFinished && petCards.length > 0 ? (
         <GameFinished />
       ) : (
         <div>

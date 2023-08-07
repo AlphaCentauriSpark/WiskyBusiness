@@ -15,7 +15,6 @@ const socketRooms = {};
 
 //   console.log('New player connected:', socket.id);
 
-
 //   //Matchmaking and room creation logic
 //   socket.on('room_joined', (room_id, petData) => {
 //     socketRooms[socket.id] = room_id;
@@ -37,17 +36,13 @@ const socketRooms = {};
 //     }
 //   });
 
-
 //   // Notify the clients that they are connected
 //   io.to(socketRooms[socket.id]).emit('players_connected', socketRooms[socket.id] );
-
-
 
 //   socket.on('make_move', (move) => {
 //     // store & send game state
 //     make_move(move, socket, io, socketRooms[socket.id]);
 //   });
-
 
 //   socket.on('disconnect', () => {
 //     console.log('server disc');
@@ -57,12 +52,8 @@ const socketRooms = {};
 //   });
 // };
 
-
-
 module.exports = (socket, io, rooms) => {
-
   console.log('New player connected:', socket.id);
-
 
   //Matchmaking and room creation logic
   socket.on('room_joined', (room_id, name, pet_data) => {
@@ -84,13 +75,10 @@ module.exports = (socket, io, rooms) => {
     if (Object.keys(rooms[socket.room_id].players).length === 2) {
       io.to(socket.room_id).emit('unpause');
     }
-
   });
 
-
   // Notify the clients that they are connected
-  io.to(socket.room_id).emit('players_connected', socket.room_id );
-
+  io.to(socket.room_id).emit('players_connected', socket.room_id);
 
   // socket.on('get_game_data', () => {
   //   io.to(socket.room_id).emit(rooms[socket.room_id].game.data);
@@ -102,9 +90,12 @@ module.exports = (socket, io, rooms) => {
 
     console.log(`pet_id::: ${pet_id}`);
     console.log(`card_index::: ${card_index}`);
-    io.to(socket.room_id).emit('move_made', { player: socket.id, pet_id: pet_id, index: card_index });
+    io.to(socket.room_id).emit('move_made', {
+      player: socket.id,
+      pet_id: pet_id,
+      index: card_index,
+    });
   });
-
 
   socket.on('disconnect', () => {
     console.log('server disc');
@@ -113,5 +104,4 @@ module.exports = (socket, io, rooms) => {
     // rooms[socket.room_id].players.splice(i, 1);
     io.to(socket.room_id).emit('pause');
   });
-
 };
