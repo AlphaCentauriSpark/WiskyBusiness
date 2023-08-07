@@ -23,10 +23,10 @@ Full-Stack Engineer and Project Manager Akash Rajan [@Akash Rajan](https://githu
 ### Demo
 
 #### Game Demo
-![Game Demo](https://github.com/AlphaCentauriSpark/WiskyBusiness/assets/96401063/533d7adf-d48d-4eec-829e-3ffa0adf5b78)
+![Game Demo](https://raw.githubusercontent.com/AlphaCentauriSpark/WiskyBusiness/main/assets/96401063/533d7adf-d48d-4eec-829e-3ffa0adf5b78)
 
 ### Catalog Demo
 ![Catalog Demo](https://github.com/AlphaCentauriSpark/WiskyBusiness/assets/96401063/0c76703d-4caa-4cde-bd3c-66163ac8b060)
 
-## Profile Demo
+### Profile Demo
 ![Profile Demo](https://github.com/AlphaCentauriSpark/WiskyBusiness/assets/96401063/44ba976d-f30a-4014-9ebd-59a459f76cd3)
