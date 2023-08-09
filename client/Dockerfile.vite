@@ -1,0 +1,20 @@
+# Which node version are we using?
+FROM node:18
+
+# Which folder in Docker File System do we want to add our code?
+WORKDIR /app/client
+
+# Save dependancies onto Docker image
+COPY package*.json ./
+
+# Install dependancies
+RUN npm install
+
+# Copy everything in dir
+COPY . .
+
+# Which port do we want to run on?
+EXPOSE 5173
+
+# What command we use to run front end code (run dev/ run build)
+CMD ["npm", "run", "dev"]
