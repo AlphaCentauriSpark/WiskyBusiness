@@ -11,12 +11,12 @@ import {
   Button,
   Typography,
 } from '@mui/material';
-import {
-  InfoOutlined,
-  IosShareOutlined,
-  FavoriteBorderOutlined,
-  FavoriteOutlined,
-} from '@mui/icons-material';
+// import {
+//   InfoOutlined,
+//   IosShareOutlined,
+//   FavoriteBorderOutlined,
+//   FavoriteOutlined,
+// } from '@mui/icons-material';
 
 const Pet = ({ photo, name, species, gender, animal }) => {
   const setCurrentPet = useContext(PetContext)[1];
@@ -137,7 +137,7 @@ const Pet = ({ photo, name, species, gender, animal }) => {
               data-animal={JSON.stringify(animal)}
               data-id={animal.id.toString()}
             >
-              <FavoriteOutlined />
+              {/* <FavoriteOutlined /> */}
             </Button>
           ) : (
             <Button
@@ -145,13 +145,13 @@ const Pet = ({ photo, name, species, gender, animal }) => {
               data-animal={JSON.stringify(animal)}
               data-id={animal.id.toString()}
             >
-              <FavoriteBorderOutlined />
+              {/* <FavoriteBorderOutlined /> */}
             </Button>
           )}
         </Tooltip>
         <Tooltip title="Share">
           <Button onClick={handleShareClick}>
-            <IosShareOutlined />
+            {/* <IosShareOutlined /> */}
           </Button>
         </Tooltip>
       </CardActions>
