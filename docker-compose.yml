@@ -6,6 +6,8 @@ services:
     build:
       context: ./client # The build context is the current directory
       dockerfile: Dockerfile.vite # Location of the Dockerfile for the Vite client
+    ports:
+      - "5173:5173"
   # Backend server service
   backend:
     build:
