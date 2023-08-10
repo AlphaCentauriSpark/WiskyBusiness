@@ -1,5 +1,5 @@
 # Which node version are we using?
-FROM node:18
+FROM node:16
 
 # Which folder in Docker File System do we want to add our code?
 WORKDIR /app/client
