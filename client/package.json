@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "deploy": "vite build && npx tailwindcss -i ./index.css -o ./dist/output.css",
-    "dev": "vite",
+    "dev": "vite --host --port 5173",
     "build": "vite build && npx tailwindcss -i ./index.css -o ./dist/output.css",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
