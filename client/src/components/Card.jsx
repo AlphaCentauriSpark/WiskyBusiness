@@ -98,7 +98,9 @@ const Pet = ({ photo, name, species, gender, animal }) => {
   return (
     <Card
       sx={{
-        width: '90%',
+        display: 'flex',
+        flexDirection: 'column',
+        // width: '90%',
         height: 300,
         borderRadius: '15px',
         backgroundColor: '#fae8ff',
@@ -109,9 +111,9 @@ const Pet = ({ photo, name, species, gender, animal }) => {
       }}
     >
       <CardMedia
-        sx={{ height: 150 }}
+        component="img"
+        sx={{ height: '150px', width: '100%', objectFit: 'contain' }}
         image={photo}
-        title="lil cat"
         data-animal={JSON.stringify(animal)}
         style={{ cursor: 'pointer' }}
         onClick={(evt) => {
@@ -120,7 +122,7 @@ const Pet = ({ photo, name, species, gender, animal }) => {
       />
 
       <CardContent>
-        <Typography gutterBottom variant="h6" component="div" id="cardText">
+        <Typography gutterBottom variant="b3" component="div" id="cardText">
           {name}
         </Typography>
         <Typography variant="body2" color="text.secondary">

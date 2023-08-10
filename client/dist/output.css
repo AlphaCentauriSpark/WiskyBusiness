@@ -576,6 +576,10 @@ video {
   margin-bottom: 2.5rem;
 }
 
+.mb-5 {
+  margin-bottom: 1.25rem;
+}
+
 .ml-5 {
   margin-left: 1.25rem;
 }
@@ -596,8 +600,20 @@ video {
   margin-top: 3.5rem;
 }
 
+.mt-2 {
+  margin-top: 0.5rem;
+}
+
 .mt-20 {
   margin-top: 5rem;
+}
+
+.mt-3 {
+  margin-top: 0.75rem;
+}
+
+.mt-\[2\.5px\] {
+  margin-top: 2.5px;
 }
 
 .flex {
@@ -622,6 +638,10 @@ video {
 
 .h-full {
   height: 100%;
+}
+
+.h-96 {
+  height: 24rem;
 }
 
 .w-4\/5 {
@@ -700,6 +720,10 @@ video {
   gap: 2.5rem;
 }
 
+.gap-3 {
+  gap: 0.75rem;
+}
+
 .gap-5 {
   gap: 1.25rem;
 }
@@ -720,6 +744,10 @@ video {
   border-radius: 9999px;
 }
 
+.rounded-xl {
+  border-radius: 0.75rem;
+}
+
 .rounded-b-3xl {
   border-bottom-right-radius: 1.5rem;
   border-bottom-left-radius: 1.5rem;
@@ -734,9 +762,21 @@ video {
   border-width: 1px;
 }
 
+.border-b-2 {
+  border-bottom-width: 2px;
+}
+
+.border-\[\#A2D2FF\]\/40 {
+  border-color: rgb(162 210 255 / 0.4);
+}
+
 .border-medium-pink {
   --tw-border-opacity: 1;
   border-color: rgb(136 0 49 / var(--tw-border-opacity));
+}
+
+.bg-\[\#BDE0fE\]\/30 {
+  background-color: rgb(189 224 254 / 0.3);
 }
 
 .bg-pink-300 {
@@ -804,6 +844,22 @@ video {
   padding: 1rem;
 }
 
+.p-6 {
+  padding: 1.5rem;
+}
+
+.p-7 {
+  padding: 1.75rem;
+}
+
+.p-5 {
+  padding: 1.25rem;
+}
+
+.p-10 {
+  padding: 2.5rem;
+}
+
 .px-3 {
   padding-left: 0.75rem;
   padding-right: 0.75rem;
@@ -858,6 +914,11 @@ video {
   line-height: 1;
 }
 
+.text-6xl {
+  font-size: 3.75rem;
+  line-height: 1;
+}
+
 .text-7xl {
   font-size: 4.5rem;
   line-height: 1;
@@ -890,6 +951,11 @@ video {
 .text-neutral-50 {
   --tw-text-opacity: 1;
   color: rgb(250 250 250 / var(--tw-text-opacity));
+}
+
+.text-pink-400 {
+  --tw-text-opacity: 1;
+  color: rgb(244 114 182 / var(--tw-text-opacity));
 }
 
 .text-pink-500 {
@@ -939,6 +1005,10 @@ video {
   transition-duration: 150ms;
 }
 
+.text-shadow {
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
 .text-shadow-sm {
   text-shadow: 1px 1px 3px rgb(36 37 47 / 25%);
 }
@@ -981,7 +1051,9 @@ video {
   }
 }
 
-html, body {
+html,
+body {
+  height: 100%;
   background-color: #fae8ff;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%23ea005d' fill-opacity='0.4' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
 }
@@ -1392,8 +1464,8 @@ html, body {
   font-family: 'Quicksand-Variable';
 
   src: url('/fonts/Quicksand-Variable.woff2') format('woff2'),
-       url('/fonts/Quicksand-Variable.woff') format('woff'),
-       url('/fonts/Quicksand-Variable.ttf') format('truetype');
+    url('/fonts/Quicksand-Variable.woff') format('woff'),
+    url('/fonts/Quicksand-Variable.ttf') format('truetype');
 
   font-weight: 300 700;
 
@@ -1406,8 +1478,8 @@ html, body {
   font-family: 'Quicksand-Light';
 
   src: url('/fonts/Quicksand-Light.woff2') format('woff2'),
-       url('/fonts/Quicksand-Light.woff') format('woff'),
-       url('/fonts/Quicksand-Light.ttf') format('truetype');
+    url('/fonts/Quicksand-Light.woff') format('woff'),
+    url('/fonts/Quicksand-Light.ttf') format('truetype');
 
   font-weight: 300;
 
@@ -1420,8 +1492,8 @@ html, body {
   font-family: 'Quicksand-Regular';
 
   src: url('/fonts/Quicksand-Regular.woff2') format('woff2'),
-       url('/fonts/Quicksand-Regular.woff') format('woff'),
-       url('/fonts/Quicksand-Regular.ttf') format('truetype');
+    url('/fonts/Quicksand-Regular.woff') format('woff'),
+    url('/fonts/Quicksand-Regular.ttf') format('truetype');
 
   font-weight: 400;
 
@@ -1434,8 +1506,8 @@ html, body {
   font-family: 'Quicksand-Medium';
 
   src: url('/fonts/Quicksand-Medium.woff2') format('woff2'),
-       url('/fonts/Quicksand-Medium.woff') format('woff'),
-       url('/fonts/Quicksand-Medium.ttf') format('truetype');
+    url('/fonts/Quicksand-Medium.woff') format('woff'),
+    url('/fonts/Quicksand-Medium.ttf') format('truetype');
 
   font-weight: 500;
 
@@ -1448,8 +1520,8 @@ html, body {
   font-family: 'Quicksand-SemiBold';
 
   src: url('/fonts/Quicksand-SemiBold.woff2') format('woff2'),
-       url('/fonts/Quicksand-SemiBold.woff') format('woff'),
-       url('/fonts/Quicksand-SemiBold.ttf') format('truetype');
+    url('/fonts/Quicksand-SemiBold.woff') format('woff'),
+    url('/fonts/Quicksand-SemiBold.ttf') format('truetype');
 
   font-weight: 600;
 
@@ -1462,8 +1534,8 @@ html, body {
   font-family: 'Quicksand-Bold';
 
   src: url('/fonts/Quicksand-Bold.woff2') format('woff2'),
-       url('/fonts/Quicksand-Bold.woff') format('woff'),
-       url('/fonts/Quicksand-Bold.ttf') format('truetype');
+    url('/fonts/Quicksand-Bold.woff') format('woff'),
+    url('/fonts/Quicksand-Bold.ttf') format('truetype');
 
   font-weight: 700;
 
@@ -1489,4 +1561,3 @@ html, body {
 .hover\:underline:hover {
   text-decoration-line: underline;
 }
-
