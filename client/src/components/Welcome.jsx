@@ -16,51 +16,60 @@ const Welcome = () => {
     setCookie('zip', zip);
   };
   return (
-    <div className="flex flex-col gap-5 items-center justify-evenly py-5 text-pink-500 font-comico-regular">
-      <span className="text-4xl">Welcome!</span>
-      <form>
-        <span className="text-2xl">
-          Name:{' '}
-          <input
-            type="text"
-            onChange={(event) => {
-              setName(event.target.value);
-            }}
-          />
-        </span>
-        <span className="text-2xl">
-          Zip Code:{' '}
-          <input
-            type="text"
-            onChange={(event) => {
-              setZip(event.target.value);
-            }}
-          />
-        </span>
-        <button type="submit" onClick={handleSubmit}>
-          Submit
-        </button>
-      </form>
-      <span className="text-2xl">Play Game:</span>
-      <div className="flex flex-row gap-5 text-2xl">
-        {!versus ? (
-          <div>
-            <Link
-              className="rounded-full bg-pink-300 hover:bg-sky-300/80 p-4 transition-colors duration-150 text-white text-center"
-              to="/solo"
-            >
-              Solo
-            </Link>{' '}
-            or{' '}
-            <button
-              className="rounded-full bg-pink-300 hover:bg-sky-300/80 p-4 transition-colors duration-150 text-white"
-              onClick={() => {
-                setVersus(true);
+    <div className="flex flex-col gap-5 items-center justify-evenly text-pink-400 font-comico-regular  ">
+      <div className="bg-[#BDE0fE]/30 w-full items-center flex flex-col p-7 mb-5 border-b-2 border-[#A2D2FF]/40">
+        <span className="text-6xl text-shadow-md mb-5">Welcome!</span>
+        <form className="flex flex-col gap-3">
+          <span className="text-2xl">
+            Name:{' '}
+            <input
+              className="flex mt-[2.5px] rounded-xl"
+              type="text"
+              onChange={(event) => {
+                setName(event.target.value);
               }}
-            >
-              Versus
-            </button>
-          </div>
+            />
+          </span>
+          <span className="text-2xl">
+            Zip Code:{' '}
+            <input
+              className="flex mt-[2.5px] rounded-xl"
+              type="text"
+              onChange={(event) => {
+                setZip(event.target.value);
+              }}
+            />
+          </span>
+          <button
+            type="submit"
+            onClick={handleSubmit}
+            className=" bg-pink-300 text-white text-xl mt-2 rounded-xl"
+          >
+            Submit
+          </button>
+        </form>
+      </div>
+      <span className="text-6xl justify-center flex mb-10 mt-3">Play Now!</span>
+      <div className="gap-5 flex text-2xl w-full h-48 justify-center items-center p-10">
+        {!versus ? (
+          <>
+            <div className="flex w-full h-full">
+              <button className="rounded-full bg-pink-300 hover:bg-sky-300/80  transition-colors duration-150 text-white text-4xl p-6 text-shadow w-full h-full">
+                <Link to="/solo">Solo</Link>
+              </button>
+            </div>
+            <p>or</p>
+            <div className="flex w-full h-full">
+              <button
+                className="rounded-full bg-pink-300 hover:bg-sky-300/80  transition-colors duration-150 text-white text-4xl p-6 text-shadow w-full h-full"
+                onClick={() => {
+                  setVersus(true);
+                }}
+              >
+                Versus
+              </button>
+            </div>
+          </>
         ) : (
           <div>
             <Link
@@ -80,12 +89,6 @@ const Welcome = () => {
           </div>
         )}
       </div>
-      <Link
-        className="rounded-full bg-pink-300 p-4 hover:bg-sky-300/80 transition-colors duration-150 text-2xl text-white"
-        to="/catalog"
-      >
-        Catalog
-      </Link>
     </div>
   );
 };

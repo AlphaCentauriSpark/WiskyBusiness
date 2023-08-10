@@ -38,6 +38,9 @@ const Catalog = () => {
         gap: 5,
       }}
     >
+      <span className="text-6xl text-shadow-md mb-5 text-medium-pink font-comico-regular">
+        Catalog
+      </span>
       <Box sx={{ paddingBottom: '20px' }}>
         <FormControl variant="outlined" sx={{ minWidth: 120 }}>
           <InputLabel id="Species Filter">Species</InputLabel>

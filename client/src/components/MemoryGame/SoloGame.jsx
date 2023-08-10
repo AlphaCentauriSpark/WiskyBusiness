@@ -156,10 +156,10 @@ const SoloGame = () => {
     <div className="flex items-center justify-center">
       {!gameFinshed ? (
         <div className="flex items-center flex-col justify-center gap-5 mt-14">
-          <h1 className="text-4xl font-bold font-comico-regular mb-10 ml-5 text-medium-pink text-shadow-xl">
+          <h1 className="text-6xl font-bold font-comico-regular mb-10 ml-5 text-medium-pink text-shadow-xl">
             Flip and match! (Solo)
           </h1>
-          <p className="text-medium-pink font-comico-regular">
+          <p className="text-medium-pink font-comico-regular text-xl">
             Match count: {flipCount}
           </p>
           <div className="grid grid-cols-6 gap-6 w-4/5 justify-center">
