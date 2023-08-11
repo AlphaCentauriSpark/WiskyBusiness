@@ -188,7 +188,7 @@ const Game = () => {
   }, [])
 
   useEffect(() => {
-    if (!socket) { return; };
+    if (!socket) { return; }
 
     console.log('name: ', cookies.user);
     socket.on('connect', () => {
