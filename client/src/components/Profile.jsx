@@ -3,12 +3,10 @@ import { useState, useEffect } from 'react';
 // import { PetContext } from '../App';
 import { useParams } from 'react-router';
 import { useCookies } from 'react-cookie';
-import { useNavigate } from 'react-router-dom';
 
 
 
 const Profile = () => {
-
 
   let { id } = useParams();
 
@@ -91,12 +89,6 @@ const Profile = () => {
   // useEffect(() => {
   // }, [alreadySaved])
 
-  const navigate = useNavigate();
-
-  const handleSeeFavorites = () => {
-    navigate('/favorites');
-  }
-
   return (
     <div>
       <h1 className="text-stone-950 font-comico-regular text-3xl m-8">{currentPet.description}</h1>
@@ -118,10 +110,10 @@ const Profile = () => {
           <div className="flex flex-row">
 
             {alreadySaved === false
-            ? <button id="favorite" className="rounded-full bg-pink-300 p-4 hover:bg-sky-300/80 transition-colors duration-150 text-white w-52 mr-40" onClick={handleClick} data-animal={JSON.stringify(currentPet)}>Add to Favorites</button>
-            :<button id="favorite" className="rounded-full bg-pink-300 p-4 hover:bg-sky-300/80 transition-colors duration-150 text-white w-52 mr-40" onClick={handleClick} data-animal={JSON.stringify(currentPet)}>Remove from Favorites</button>
+            ? <button id="favorite" className="rounded-full bg-pink-300 p-4 hover:bg-sky-300/80 transition-colors duration-150 w-52 mr-40" onClick={handleClick} data-animal={JSON.stringify(currentPet)}>Add to Favorites</button>
+            :<button id="favorite" className="rounded-full bg-pink-300 p-4 hover:bg-sky-300/80 transition-colors duration-150 w-52 mr-40" onClick={handleClick} data-animal={JSON.stringify(currentPet)}>Remove from Favorites</button>
             }
-            <button className="rounded-full bg-pink-300 p-4 hover:bg-sky-300/80 transition-colors duration-150 text-white w-52" onClick={handleSeeFavorites}>See Your Favorite Pets</button>
+            <button className="rounded-full bg-pink-300 p-4 hover:bg-sky-300/80 transition-colors duration-150 w-52">See Your Favorite Pets</button>
           </div>
         </div>
       </div>
