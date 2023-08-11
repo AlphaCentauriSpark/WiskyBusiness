@@ -6,7 +6,7 @@ export default defineConfig({
   server: {
     host: '0.0.0.0',
     port: 5173,
-    public: 'http://ec2-54-219-164-184.us-west-1.compute.amazonaws.com/',
+    // public: 'http://ec2-54-219-164-184.us-west-1.compute.amazonaws.com/',
   },
   plugins: [react()],
 });
